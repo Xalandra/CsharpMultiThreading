@@ -31,5 +31,6 @@ namespace Vidarr
         {
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
+
     }
 }

@@ -10,8 +10,7 @@
                CompactPaneLength="50" OpenPaneLength="150">
         <SplitView.Pane>
             <StackPanel Background="Gray">
-                <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
-                    Width="50" Height="50" Background="Transparent" Click="HamburgerButton_Click"/>
+                <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Height="50" Background="Transparent" Click="HamburgerButton_Click" HorizontalAlignment="Stretch" Margin="0,0,100,0"/>
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="MenuButton1" FontFamily="Segoe MDL2 Assets" Content="&#xE825;"
                     Width="50" Height="50" Background="Transparent"/>
