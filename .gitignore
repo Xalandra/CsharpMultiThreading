@@ -1,0 +1,4 @@
+Vidarr/Vidarr/bin/
+Vidarr/Vidarr/obj/
+.vs/slnx.sqlite
+Vidarr/Vidarr/project.lock.json
