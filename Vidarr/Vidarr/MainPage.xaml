@@ -29,7 +29,7 @@
             </StackPanel>
         </SplitView.Pane>
         <SplitView.Content>
-            <Grid>
+            <Grid Background="Black">
                 <TextBlock Text="SplitView Basic" FontSize="54" Foreground="White"
                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
