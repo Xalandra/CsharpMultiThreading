@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Web.Http;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -31,6 +32,7 @@ namespace Vidarr
         public MainPage()
         {
             this.InitializeComponent();
+            Crawl();
         }
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
@@ -98,22 +100,9 @@ namespace Vidarr
                     {
                         string value = match.Groups[1].Value;
                         Debug.WriteLine(value);
+
                     }
                 }
-
-                //MatchCollection m1 = Regex.Matches(textBox1.Text, @"(<span(.*?)/span>)",
-                //    RegexOptions.Singleline);
-
-                //foreach (Match m in m1)
-                //{
-                //    string cell = m.Groups[1].Value;
-                //    Match match = Regex.Match(cell, @"<span(.+?)/span>");
-                //    if (match.Success)
-                //    {
-                //        string value = match.Groups[1].Value;
-                //        Debug.WriteLine(value);
-                //    }
-                //}
             }
             catch (Exception ex)
             {
@@ -134,6 +123,74 @@ namespace Vidarr
         private void textBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        public async void Crawl()
+        {
+            HttpClient httpClient = new HttpClient();
+            List<string> crawlList = new List<string>();
+
+            Uri requestUri = new Uri("https://www.youtube.com/");
+            Debug.WriteLine(requestUri);
+
+            //Send the GET request asynchronously and retrieve the response as a string.
+            Windows.Web.Http.HttpResponseMessage httpResponse = new Windows.Web.Http.HttpResponseMessage();
+            string httpResponseBody = "";
+
+            try
+            {
+                //Send the GET request
+                httpResponse = await httpClient.GetAsync(requestUri);
+                httpResponse.EnsureSuccessStatusCode();
+                httpResponseBody = await httpResponse.Content.ReadAsStringAsync();
+                //textBox1.Text = httpResponseBody;
+
+
+                //MatchCollection m1 = Regex.Matches(httpResponseBody, @"(<h3(.*?)/h3>)",
+                //RegexOptions.Singleline);
+
+                //foreach (Match m in m1)
+                //{
+                //    string cell = m.Groups[1].Value;
+                //    Match match = Regex.Match(cell, @"<h3(.+?)/h3>");
+                //    if (match.Success)
+                //    {
+                //        string value = match.Groups[1].Value;
+                //        //Debug.WriteLine(value);
+                //        crawlList.Add(value);
+                //    }
+                //}
+
+                MatchCollection m1 = Regex.Matches(httpResponseBody, @"(<h3(.*?)/h3>)",
+                RegexOptions.Singleline);
+
+                foreach (Match m in m1)
+                {
+                    string cell = m.Groups[1].Value;
+                    Match match = Regex.Match(cell, @"<h3(.+?)/h3>");
+                    Match match2 = Regex.Match(cell, @"<a href=(.+?) c");
+                    if (match.Success)
+                    {
+                        if (match2.Success)
+                        {
+                            string value = match2.Groups[1].Value;
+                            crawlList.Add(value);
+                            Debug.WriteLine(value);
+                        }
+                        //string value = match.Groups[1].Value;
+
+                        //Debug.WriteLine(value);
+                        //crawlList.Add(value);
+                    }
+                }
+                //Debug.WriteLine(c);
+                
+                //System.IO.File.WriteAllLines(@"D:\School\Jaar 3\Periode 3\C# Threading\Test\save.txt", crawlList);
+            }
+            catch (Exception ex)
+            {
+                httpResponseBody = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+            }
         }
     }
 }
