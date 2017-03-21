@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,9 +23,12 @@ namespace Vidarr
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        TestJannemarie tj;
+
         public MainPage()
         {
             this.InitializeComponent();
+            tj = new TestJannemarie();
         }
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
@@ -32,5 +36,23 @@ namespace Vidarr
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
 
+        private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private async void MenuButton2_Click(object sender, RoutedEventArgs e)
+        {
+            //haal info van website en stop in txt bestand
+            watVanWebsite.Text = await tj.doeWatJannemarieWil();
+        }
+
+        private void MenuButton3_Click(object sender, RoutedEventArgs e)
+        {
+            //probeer van txt bestand xml te maken
+            tj.zetOmNaarXML();
+        }
+
+        
     }
 }

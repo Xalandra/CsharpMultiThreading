@@ -14,17 +14,17 @@
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="MenuButton1" FontFamily="Segoe MDL2 Assets" Content="&#xE825;"
                     Width="50" Height="50" Background="Transparent"/>
-                    <TextBlock Text="Button 1" FontSize="18" VerticalAlignment="Center" />
+                    <TextBlock Text="Download" FontSize="18" VerticalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="MenuButton2" FontFamily="Segoe MDL2 Assets" Content="&#xE10F;"
-                        Width="50" Height="50" Background="Transparent"/>
-                    <TextBlock Text="Button 2" FontSize="18" VerticalAlignment="Center" />
+                        Width="50" Height="50" Background="Transparent" Click="MenuButton2_Click"/>
+                    <TextBlock Text="Converted" FontSize="18" VerticalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="MenuButton3" FontFamily="Segoe MDL2 Assets" Content="&#xE1D6;"
-                        Width="50" Height="50" Background="Transparent"/>
-                    <TextBlock Text="Button 3" FontSize="18" VerticalAlignment="Center" />
+                        Width="50" Height="50" Background="Transparent" Click="MenuButton3_Click"/>
+                    <TextBlock Text="Editor" FontSize="18" VerticalAlignment="Center" SelectionChanged="TextBlock_SelectionChanged" />
                 </StackPanel>
             </StackPanel>
         </SplitView.Pane>
@@ -32,6 +32,7 @@
             <Grid Background="Black">
                 <TextBlock Text="SplitView Basic" FontSize="54" Foreground="White"
                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="watVanWebsite" Text="Nog niks gedaan." FontSize="12" Foreground="White" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="620" Width="290"/>
             </Grid>
         </SplitView.Content>
     </SplitView>
