@@ -7,7 +7,11 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+<<<<<<< HEAD
 using Windows.UI.ViewManagement;
+=======
+using Windows.Storage;
+>>>>>>> 3cbb607eb3331f0d2a7d9050d761b8015c3e3844
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -26,13 +30,21 @@ namespace Vidarr
     /// </summary>
     public sealed partial class MainPage : Page
     {
+<<<<<<< HEAD
         //List<string> videoList = new List<string>();
         string[] videoArray = new string[] {"New song", "New song" , "New song" , "New song" , "New song" };
+=======
+        TestJannemarie tj;
+>>>>>>> 3cbb607eb3331f0d2a7d9050d761b8015c3e3844
 
         public MainPage()
         {
             this.InitializeComponent();
+<<<<<<< HEAD
             Crawl();
+=======
+            tj = new TestJannemarie();
+>>>>>>> 3cbb607eb3331f0d2a7d9050d761b8015c3e3844
         }
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
@@ -40,6 +52,7 @@ namespace Vidarr
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
 
+<<<<<<< HEAD
         private async void button_Click(object sender, RoutedEventArgs e)
         {
             foreach (var v in videoArray)
@@ -192,5 +205,25 @@ namespace Vidarr
                 httpResponseBody = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
             }
         }
+=======
+        private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private async void MenuButton2_Click(object sender, RoutedEventArgs e)
+        {
+            //haal info van website en stop in txt bestand
+            watVanWebsite.Text = await tj.doeWatJannemarieWil();
+        }
+
+        private void MenuButton3_Click(object sender, RoutedEventArgs e)
+        {
+            //probeer van txt bestand xml te maken
+            tj.zetOmNaarXML();
+        }
+
+        
+>>>>>>> 3cbb607eb3331f0d2a7d9050d761b8015c3e3844
     }
 }
