@@ -4,7 +4,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+<<<<<<< HEAD
 using System.Text.RegularExpressions;
+=======
+using Vidarr.Classes;
+>>>>>>> f2a101d7ad07c6fde11ed63670fb01cf0c6adebb
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 <<<<<<< HEAD
@@ -31,20 +35,28 @@ namespace Vidarr
     public sealed partial class MainPage : Page
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         //List<string> videoList = new List<string>();
         string[] videoArray = new string[] {"New song", "New song" , "New song" , "New song" , "New song" };
 =======
         TestJannemarie tj;
 >>>>>>> 3cbb607eb3331f0d2a7d9050d761b8015c3e3844
+=======
+        Crawler crawler;
+>>>>>>> f2a101d7ad07c6fde11ed63670fb01cf0c6adebb
 
         public MainPage()
         {
             this.InitializeComponent();
 <<<<<<< HEAD
+<<<<<<< HEAD
             Crawl();
 =======
             tj = new TestJannemarie();
 >>>>>>> 3cbb607eb3331f0d2a7d9050d761b8015c3e3844
+=======
+            crawler = new Crawler();
+>>>>>>> f2a101d7ad07c6fde11ed63670fb01cf0c6adebb
         }
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
@@ -215,12 +227,14 @@ namespace Vidarr
         {
             //haal info van website en stop in txt bestand
             watVanWebsite.Text = await tj.doeWatJannemarieWil();
+            watVanWebsite.Text = await crawler.crawlZoekterm(inputZoekterm.Text);
         }
 
         private void MenuButton3_Click(object sender, RoutedEventArgs e)
         {
             //probeer van txt bestand xml te maken
             tj.zetOmNaarXML();
+            //tj.zetOmNaarXML();
         }
 
         
