@@ -25,10 +25,12 @@ namespace Vidarr.Classes
             lijstResponses = new List<string>();
             lijstResponsesKeywords = new List<string>();
 
-            Task beginpuntCrawl = new Task(async() => { await crawlBeginpunt(); });
-            beginpuntCrawl.Start();
+            Task beginpuntCrawl = new Task(async() => {
+                await crawlBeginpunt();
 
-            //gaMaarCrawlen();
+                gaMaarCrawlen();
+            });
+            beginpuntCrawl.Start();
         }
 
         //zoek op userinput
@@ -72,7 +74,13 @@ namespace Vidarr.Classes
                     //haal de body uit de response
                     httpResponseBody = regexBody(httpResponseBody);
                     httpResponseBody = regexContent(httpResponseBody);
-                    httpResponseBody = regexResults(httpResponseBody);
+                    //httpResponseBody = regexResults(httpResponseBody);
+
+                    lijstResponses.Add(httpResponseBody);
+
+                    Debug.WriteLine("Aantal in lijstResponses: " + lijstResponses.Count);
+
+                    
                 });
                 probeer.Start();
                 await probeer;
@@ -94,26 +102,28 @@ namespace Vidarr.Classes
             while (!finished)
             {
                 //als beginpunt responses heeft gevonden
-                if (lijstResponses.Count > 1)
+                if (lijstResponses.Count > 0)
                 {
                     //voor testen max 50 rondes
                     if (aantalGecrawled < 50)
                     {
-                        //pakt responsebody uit LijstResponses, urls komen in LijstUrls
-                        await Task.Factory.StartNew(() =>
+                        //3 tasks voor urls zoeken
+                        for (int i = 0; i < 3; i++)
                         {
-                            Debug.WriteLine("Task gets urls uit body uit lijstResponses");
-                            try
+                            //pakt responsebody uit LijstResponses, urls komen in LijstUrls
+                            await Task.Factory.StartNew(() =>
                             {
-                                getUrls(pakUitQueue("responses"));
-                            }
-                            catch (NullReferenceException e)
-                            {
-                                Debug.WriteLine("getUrls() in while geeft NullReferenceException: " + e.Message);
-                            }
-                        });
-
-
+                                Debug.WriteLine("Task gets urls uit body uit lijstResponses");
+                                try
+                                {
+                                    getUrls(pakUitQueue("responses"));
+                                }
+                                catch (NullReferenceException e)
+                                {
+                                    Debug.WriteLine("getUrls() in while geeft NullReferenceException: " + e.Message);
+                                }
+                            });
+                        }
                         //pakt url van LijstUrls, Responsebody komt in LijstResponses
                         await Task.Factory.StartNew(async () =>
                         {
@@ -127,8 +137,6 @@ namespace Vidarr.Classes
                                 Debug.WriteLine("getResponseBody() in while geeft NullReferenceException: " + e.Message);
                             }
                         });
-
-
                         //pakt maar verwijdert niet responsebody uit lijstresponses, keywords komen in database
                         await Task.Factory.StartNew(() =>
                         {
@@ -174,7 +182,7 @@ namespace Vidarr.Classes
             if (match.Success)
             {
                 body = match.Value;
-                Debug.WriteLine(body);
+                //Debug.WriteLine(body);
             }
             else
             {
@@ -194,7 +202,7 @@ namespace Vidarr.Classes
             if (match.Success)
             {
                 body = match.Value;
-                Debug.WriteLine(body);
+                //Debug.WriteLine(body);
             }
             else
             {
@@ -214,7 +222,7 @@ namespace Vidarr.Classes
             if (match.Success)
             {
                 body = match.Value;
-                Debug.WriteLine(body);
+                //Debug.WriteLine(body);
             }
             else
             {
@@ -239,7 +247,7 @@ namespace Vidarr.Classes
                 {
                     url = m.Value;
                     bool isUri = Uri.IsWellFormedUriString(url, UriKind.Absolute);
-                    //Debug.WriteLine("Gevonden url: " + url);
+                    Debug.WriteLine("Gevonden url: " + url);
                     //Debug.WriteLine("bool: " + isUri);
                     if (isUri)
                     {

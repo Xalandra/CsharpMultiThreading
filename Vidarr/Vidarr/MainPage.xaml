@@ -19,17 +19,14 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="MenuButton2" FontFamily="Segoe MDL2 Assets" Content="&#xE10F;"
-                        Width="50" Height="50" Background="Transparent"/>
-                    <TextBlock Text="Button 2" FontSize="18" VerticalAlignment="Center" />
                         Width="50" Height="50" Background="Transparent" Click="MenuButton2_Click"/>
                     <TextBlock Text="Converted" FontSize="18" VerticalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="MenuButton3" FontFamily="Segoe MDL2 Assets" Content="&#xE1D6;"
-                        Width="50" Height="50" Background="Transparent"/>
-                    <TextBlock Text="Button 3" FontSize="18" VerticalAlignment="Center" />
                         Width="50" Height="50" Background="Transparent" Click="MenuButton3_Click"/>
                     <TextBlock Text="Editor" FontSize="18" VerticalAlignment="Center" SelectionChanged="TextBlock_SelectionChanged" />
+
                 </StackPanel>
             </StackPanel>
         </SplitView.Pane>
@@ -37,19 +34,8 @@
             <Grid Background="Black">
                 <TextBlock Text="SplitView Basic" FontSize="54" Foreground="White"
                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
-<<<<<<< HEAD
-                <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="6" Width="100"/>
-                <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" Click="button_Click" Background="#FFEAF5CC"/>
-                <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="100" Margin="183,47,0,0" VerticalAlignment="Top" Width="100"/>
-                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="700" Width="700" SelectionChanged="textBlock_SelectionChanged" Foreground="White" Text="Blabla"/>
-                <TextBox x:Name="textBox1" HorizontalAlignment="Left" Margin="75,84,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Foreground="White"/>
-=======
                 <TextBlock x:Name="watVanWebsite" Text="Nog niks gedaan." FontSize="12" Foreground="White" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="620" Width="290"/>
-<<<<<<< HEAD
->>>>>>> 3cbb607eb3331f0d2a7d9050d761b8015c3e3844
-=======
                 <TextBox x:Name="inputZoekterm" HorizontalAlignment="Left" Margin="195,32,0,0" TextWrapping="Wrap" Text="Vul zoekterm in.." VerticalAlignment="Top" Width="110"/>
->>>>>>> f2a101d7ad07c6fde11ed63670fb01cf0c6adebb
             </Grid>
         </SplitView.Content>
     </SplitView>
