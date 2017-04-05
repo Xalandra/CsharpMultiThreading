@@ -1,0 +1,18 @@
+﻿<Page
+    x:Class="Vidarr.ExtendedSplash"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Vidarr"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Canvas HorizontalAlignment="Left" Height="700" Margin="10,10,0,0" VerticalAlignment="Top" Width="1260">
+            <Image Height="700" Width="1260" x:Name="extendedSplashImage" Source="Assets/SplashScreen.scale-200.png"/>
+            <ProgressRing Name="splashProgressRing" IsActive="True" Width="100" Height="100" HorizontalAlignment="Center" Canvas.Left="556" Canvas.Top="570"></ProgressRing>
+
+
+        </Canvas>
+    </Grid>
+</Page>
