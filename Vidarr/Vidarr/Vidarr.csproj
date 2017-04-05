@@ -16,7 +16,11 @@
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+<<<<<<< HEAD:FilmpiesProject/FilmpiesProject/FilmpiesProject.csproj
+    <PackageCertificateKeyFile>FilmpiesProject_TemporaryKey.pfx</PackageCertificateKeyFile>
+=======
     <PackageCertificateKeyFile>Vidarr_TemporaryKey.pfx</PackageCertificateKeyFile>
+>>>>>>> 5f73d2af92497a2193ecdf6a2c721e0fb54e8089:Vidarr/Vidarr/Vidarr.csproj
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -102,12 +106,17 @@
       <DependentUpon>OptionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\TestclassRENE.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+<<<<<<< HEAD:FilmpiesProject/FilmpiesProject/FilmpiesProject.csproj
+    <None Include="FilmpiesProject_TemporaryKey.pfx" />
+=======
     <None Include="Vidarr_TemporaryKey.pfx" />
+>>>>>>> 5f73d2af92497a2193ecdf6a2c721e0fb54e8089:Vidarr/Vidarr/Vidarr.csproj
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />
