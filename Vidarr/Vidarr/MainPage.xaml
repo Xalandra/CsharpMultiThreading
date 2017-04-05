@@ -33,6 +33,7 @@
                 <TextBlock Text="SplitView Basic" FontSize="54" Foreground="White"
                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock x:Name="watVanWebsite" Text="Nog niks gedaan." FontSize="12" Foreground="White" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="620" Width="290"/>
+                <TextBox x:Name="inputZoekterm" HorizontalAlignment="Left" Margin="195,32,0,0" TextWrapping="Wrap" Text="Vul zoekterm in.." VerticalAlignment="Top" Width="110"/>
             </Grid>
         </SplitView.Content>
     </SplitView>

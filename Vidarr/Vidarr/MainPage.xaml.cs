@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Vidarr.Classes;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -23,12 +24,12 @@ namespace Vidarr
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        TestJannemarie tj;
+        Crawler crawler;
 
         public MainPage()
         {
             this.InitializeComponent();
-            tj = new TestJannemarie();
+            crawler = new Crawler();
         }
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
@@ -44,13 +45,13 @@ namespace Vidarr
         private async void MenuButton2_Click(object sender, RoutedEventArgs e)
         {
             //haal info van website en stop in txt bestand
-            watVanWebsite.Text = await tj.doeWatJannemarieWil();
+            watVanWebsite.Text = await crawler.crawlZoekterm(inputZoekterm.Text);
         }
 
         private void MenuButton3_Click(object sender, RoutedEventArgs e)
         {
             //probeer van txt bestand xml te maken
-            tj.zetOmNaarXML();
+            //tj.zetOmNaarXML();
         }
 
         
