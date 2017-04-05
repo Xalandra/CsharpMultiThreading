@@ -98,10 +98,6 @@
     <Compile Include="Classes\Crawler.cs" />
     <Compile Include="Classes\MaakHttpClientAan.cs" />
     <Compile Include="Classes\TestJannemarie.cs" />
-    <Compile Include="ExtendedSplash.cs" />
-    <Compile Include="ExtendedSplash.xaml.cs">
-      <DependentUpon>ExtendedSplash.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -128,10 +124,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="ExtendedSplash.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
