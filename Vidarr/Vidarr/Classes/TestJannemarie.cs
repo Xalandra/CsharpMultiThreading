@@ -82,7 +82,9 @@ public class TestJannemarie
 
     public async void gaMaarCrawlen()
     {
+#pragma warning disable CS0219 // The variable 'beginPunt' is assigned but its value is never used
         bool beginPunt = true;
+#pragma warning restore CS0219 // The variable 'beginPunt' is assigned but its value is never used
         bool finished = false;
 
         int aantalGecrawled = 0;

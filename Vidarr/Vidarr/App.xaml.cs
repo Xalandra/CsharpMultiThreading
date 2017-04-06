@@ -14,6 +14,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.EntityFrameworkCore;
+using Vidarr.Classes;
 
 namespace Vidarr
 {
@@ -30,6 +32,11 @@ namespace Vidarr
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            using (var db = new BloggingContext())
+            {
+                db.Database.Migrate();
+            }
         }
 
         /// <summary>

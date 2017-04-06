@@ -74,13 +74,10 @@ namespace Vidarr.Classes
                     //haal de body uit de response
                     httpResponseBody = regexBody(httpResponseBody);
                     httpResponseBody = regexContent(httpResponseBody);
-                    //httpResponseBody = regexResults(httpResponseBody);
 
                     lijstResponses.Add(httpResponseBody);
 
-                    Debug.WriteLine("Aantal in lijstResponses: " + lijstResponses.Count);
-
-                    
+                    Debug.WriteLine("Aantal in lijstResponses na beginpuntcrawl: " + lijstResponses.Count);
                 });
                 probeer.Start();
                 await probeer;
@@ -105,42 +102,46 @@ namespace Vidarr.Classes
                 if (lijstResponses.Count > 0)
                 {
                     //voor testen max 50 rondes
-                    if (aantalGecrawled < 50)
+                    if (aantalGecrawled < 5000)
                     {
-                        //3 tasks voor urls zoeken
-                        for (int i = 0; i < 3; i++)
+                        //pakt responsebody uit LijstResponses, urls komen in LijstUrls
+                        await Task.Factory.StartNew(() =>
                         {
-                            //pakt responsebody uit LijstResponses, urls komen in LijstUrls
-                            await Task.Factory.StartNew(() =>
-                            {
-                                Debug.WriteLine("Task gets urls uit body uit lijstResponses");
-                                try
-                                {
-                                    getUrls(pakUitQueue("responses"));
-                                }
-                                catch (NullReferenceException e)
-                                {
-                                    Debug.WriteLine("getUrls() in while geeft NullReferenceException: " + e.Message);
-                                }
-                            });
-                        }
-                        //pakt url van LijstUrls, Responsebody komt in LijstResponses
-                        await Task.Factory.StartNew(async () =>
-                        {
-                            Debug.WriteLine("Task gets body uit url uit lijstUrls");
+                            //Debug.WriteLine("Task gets urls uit body uit lijstResponses");
                             try
                             {
-                                await getResponseBody(pakUitQueue("urls"));
+                                getUrls(pakUitQueue("responses"));
                             }
                             catch (NullReferenceException e)
                             {
-                                Debug.WriteLine("getResponseBody() in while geeft NullReferenceException: " + e.Message);
+                                Debug.WriteLine("getUrls() in while geeft NullReferenceException: " + e.Message);
                             }
+
+                            aantalGecrawled++;
                         });
+                        //get meer bodys
+                        for (int i = 0; i < 10; i++)
+                        {
+                            //pakt url van LijstUrls, Responsebody komt in LijstResponses
+                            await Task.Factory.StartNew(async () =>
+                            {
+                                //Debug.WriteLine("Task gets body uit url uit lijstUrls");
+                                try
+                                {
+                                    await getResponseBody(pakUitQueue("urls"));
+                                }
+                                catch (NullReferenceException e)
+                                {
+                                    Debug.WriteLine("getResponseBody() in while geeft NullReferenceException: " + e.Message);
+                                }
+
+                                aantalGecrawled++;
+                            });
+                        }
                         //pakt maar verwijdert niet responsebody uit lijstresponses, keywords komen in database
                         await Task.Factory.StartNew(() =>
                         {
-                            Debug.WriteLine("Task gets keywords uit body uit lijstResponses");
+                            //Debug.WriteLine("Task gets keywords uit body uit lijstResponses");
                             try
                             {
                                 getKeywords(pakUitQueue("keywords"));
@@ -149,9 +150,9 @@ namespace Vidarr.Classes
                             {
                                 Debug.WriteLine("getKeywords() in while geeft NullReferenceException: " + e.Message);
                             }
-                        });
 
-                        aantalGecrawled++;
+                            aantalGecrawled++;
+                        });
 
                     }
                     else
@@ -164,11 +165,32 @@ namespace Vidarr.Classes
                 }
                 else
                 {
-                    Debug.WriteLine("beginpunt heeft nog geen responses gevonden..");
+                    //Debug.WriteLine("beginpunt heeft nog geen responses gevonden..");
+
+                    /*try
+                    {
+                        for (int i = 0; lijstUrls.Count > i; i++)
+                        {
+                            Debug.WriteLine("Lijst[" + i + "] = " + lijstUrls[i]);
+                        }
+                    }
+                    catch (NullReferenceException e)
+                    {
+                        Debug.WriteLine("getKeywords() geeft NullReferenceException: " + e.Message);
+                    }*/
                 }
 
             }
         }
+
+
+
+
+
+
+
+
+
 
 
         //haal body uit httpResponseBody
@@ -186,7 +208,7 @@ namespace Vidarr.Classes
             }
             else
             {
-                Debug.WriteLine("Geen body kunnen vinden.");
+                //Debug.WriteLine("Geen body kunnen vinden.");
             }
             return body;
         }
@@ -206,7 +228,7 @@ namespace Vidarr.Classes
             }
             else
             {
-                Debug.WriteLine("Geen content kunnen vinden.");
+                //Debug.WriteLine("Geen content kunnen vinden.");
             }
             return body;
         }
@@ -226,7 +248,7 @@ namespace Vidarr.Classes
             }
             else
             {
-                Debug.WriteLine("Geen results kunnen vinden.");
+                //Debug.WriteLine("Geen results kunnen vinden.");
             }
             return body;
         }
@@ -251,7 +273,11 @@ namespace Vidarr.Classes
                     //Debug.WriteLine("bool: " + isUri);
                     if (isUri)
                     {
-                        lijstUrls.Add(url);
+                        //lijstUrls.Add(url);
+                    }
+                    if (!isUri)
+                    {
+                        //Debug.WriteLine(url);
                     }
                 }
             }
@@ -263,14 +289,23 @@ namespace Vidarr.Classes
             //haal keywords uit body
             string keywords = "";
             string pattern = "title=\"(.*?)</a>";
-            MatchCollection collection = Regex.Matches(response, pattern);
-            foreach (Match m in collection)
+            MatchCollection collection;
+            try
             {
-                //spuug uit van je gevonden hebt
-                keywords = m.Value;
-                lijstResponsesKeywords.Add(keywords);
-                Debug.WriteLine("Gevonden keywords: " + keywords);
+                collection = Regex.Matches(response, pattern);
+
+                foreach (Match m in collection)
+                {
+                    //spuug uit van je gevonden hebt
+                    keywords = m.Value;
+                    lijstResponsesKeywords.Add(keywords);
+                    Debug.WriteLine("Gevonden keywords: " + keywords);
+                }
             }
+            catch (NullReferenceException e) {
+                Debug.WriteLine("getKeywords() geeft NullReferenceException: " + e.Message);
+            }
+            
         }
 
 
@@ -294,15 +329,17 @@ namespace Vidarr.Classes
                 httpClientRequest = new MaakHttpClientAan();
 
                 //welke url crawlen
-                Debug.WriteLine("url in getResponseBody() = " + url);
+                //Debug.WriteLine("url in getResponseBody() = " + url);
 
                 string antwoord = await httpClientRequest.doeHttpRequestYoutubeVoorScrawlerEnGeefResults(url); //await = wacht totdat antwoord is
-                Debug.WriteLine(antwoord);
+                //Debug.WriteLine(antwoord);
 
                 //haal body uit string
                 body = regexBody(antwoord);
+                body = regexContent(body);
                 
                 lijstResponses.Add(body);
+                lijstResponsesKeywords.Add(body);
             }
             catch (NullReferenceException e)
             {
@@ -321,7 +358,7 @@ namespace Vidarr.Classes
             }
             catch (NullReferenceException e)
             {
-                Debug.WriteLine("getUrls() geeft NullReferenceException: " + e.Message);
+                //Debug.WriteLine("getUrls() geeft NullReferenceException: " + e.Message);
             }
         }
 
@@ -359,7 +396,7 @@ namespace Vidarr.Classes
                 }
                 else
                 {
-                    return "https://www.google.com";
+                    return "https://www.youtube.com";
                 }
             }
             if (lijst == "keywords")
@@ -372,23 +409,29 @@ namespace Vidarr.Classes
                 }
             }
 
-            /*
+            return res;
+
+
+        }
+
+        public void outputLists()
+        {
             try
             {
-                for (int i = 0; lijstUrls.Count > i; i++)
-                {
-                    Debug.WriteLine("Lijst[" + i + "] = " + lijstUrls[i]);
-                }
+
+                    Debug.WriteLine("LijstUrls = " + lijstResponses.Count);
+
+
+                    Debug.WriteLine("LijstBodys = " + lijstUrls.Count);
+
+
+                    Debug.WriteLine("LijstKeywords = " + lijstResponsesKeywords.Count);
+
             }
             catch (NullReferenceException e)
             {
                 Debug.WriteLine("getKeywords() geeft NullReferenceException: " + e.Message);
             }
-            */
-
-            return res;
-
-
         }
     }
 }

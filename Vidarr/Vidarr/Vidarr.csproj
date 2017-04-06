@@ -97,10 +97,20 @@
     </Compile>
     <Compile Include="Classes\Crawler.cs" />
     <Compile Include="Classes\MaakHttpClientAan.cs" />
+    <Compile Include="Classes\Model.cs" />
     <Compile Include="Classes\TestJannemarie.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20170406131552_MyFirstMigration.cs" />
+    <Compile Include="Migrations\20170406131552_MyFirstMigration.designer.cs">
+      <DependentUpon>20170406131552_MyFirstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20170406135606_videoMigration.cs" />
+    <Compile Include="Migrations\20170406135606_videoMigration.designer.cs">
+      <DependentUpon>20170406135606_videoMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\BloggingContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
