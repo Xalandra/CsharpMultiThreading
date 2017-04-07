@@ -38,15 +38,21 @@ namespace Vidarr
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
 
+
+        private void MenuButton1_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Download));
+
+        }
+
         private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private async void MenuButton2_Click(object sender, RoutedEventArgs e)
+        private void MenuButton2_Click(object sender, RoutedEventArgs e)
         {
-            //haal info van website en stop in txt bestand
-            watVanWebsite.Text = await crawler.crawlZoekterm(inputZoekterm.Text);
+            
         }
 
         private void MenuButton3_Click(object sender, RoutedEventArgs e)
@@ -78,6 +84,12 @@ namespace Vidarr
 
                 Videos.ItemsSource = db.Videos.ToList();
             }
+        }
+
+        private async void zoekButton_Click(object sender, RoutedEventArgs e)
+        {
+            //haal info van website en stop in txt bestand
+            watVanWebsite.Text = await crawler.crawlZoekterm(inputZoekterm.Text);
         }
     }
 }

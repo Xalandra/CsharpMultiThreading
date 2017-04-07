@@ -12,16 +12,15 @@
         <SplitView.Pane>
             <StackPanel Background="Gray">
                 <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Height="50" Background="Transparent" Click="HamburgerButton_Click" HorizontalAlignment="Stretch" Margin="0,0,100,0"/>
-                <StackPanel RequestedTheme="Light" Orientation="Horizontal">
-                    <Button x:Name="MenuButton1" FontFamily="Segoe MDL2 Assets" Content="&#xE825;"
-                    Width="50" Height="50" Background="Transparent"/>
-                    <TextBlock Text="Button 1" FontSize="18" VerticalAlignment="Center" />
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="MenuButton1" FontFamily="Segoe MDL2 Assets" Content="&#xE896;"
+                    Width="50" Height="50" Background="Transparent" Click="MenuButton1_Click"/>
                     <TextBlock Text="Download" FontSize="18" VerticalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="MenuButton2" FontFamily="Segoe MDL2 Assets" Content="&#xE10F;"
                         Width="50" Height="50" Background="Transparent" Click="MenuButton2_Click"/>
-                    <TextBlock Text="Converted" FontSize="18" VerticalAlignment="Center" />
+                    <TextBlock Text="Convert" FontSize="18" VerticalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="MenuButton3" FontFamily="Segoe MDL2 Assets" Content="&#xE1D6;"
@@ -50,6 +49,16 @@
                         </ListView.ItemTemplate>
                     </ListView>
                 </StackPanel>
+                <Button x:Name="zoekButton" Content="Button" HorizontalAlignment="Left" Margin="352,49,0,0" VerticalAlignment="Top" Background="#FF8E00CA" Click="zoekButton_Click"/>
+
+                <!--<Grid.RowDefinitions>
+                    <RowDefinition Height="24*"/>
+                    <RowDefinition Height="53*"/>
+                    <RowDefinition Height="1003*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="SplitView Basic" FontSize="54" Foreground="White"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" Margin="759,427,758,504" Grid.Row="2"/>-->
+
             </Grid>
         </SplitView.Content>
     </SplitView>
