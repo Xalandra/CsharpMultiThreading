@@ -8,7 +8,6 @@ namespace FilmpiesProject.Properties
 {
     class TestclassRENE
     {
-        TestclassRENE
-            Test
+        
     }
 }
