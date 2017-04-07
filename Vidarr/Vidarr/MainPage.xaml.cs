@@ -55,6 +55,29 @@ namespace Vidarr
             //tj.zetOmNaarXML();
         }
 
-        
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            crawler.outputLists();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            using (var db = new BloggingContext())
+            {
+                Videos.ItemsSource = db.Videos.ToList();
+            }
+        }
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            using (var db = new BloggingContext())
+            {
+                var blog = new Videos { Url = NewBlogUrl.Text };
+                db.Videos.Add(blog);
+                db.SaveChanges();
+
+                Videos.ItemsSource = db.Videos.ToList();
+            }
+        }
     }
 }

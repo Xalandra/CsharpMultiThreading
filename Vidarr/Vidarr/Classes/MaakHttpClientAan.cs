@@ -63,6 +63,10 @@ namespace Vidarr.Classes
         public async Task<string> doeHttpRequestYoutubeVoorScrawlerEnGeefResults(string url)
         {
             //string zoekterm = "koekjes";
+            Uri x;
+            Boolean kanhet = Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out x);
+            Debug.WriteLine("Kanhet Uri maken? " + kanhet + ". x = " + x);
+
             Uri requestUri = new Uri(url);
             //Send the GET request asynchronously and retrieve the response as a string.
             HttpResponseMessage httpResponse = new HttpResponseMessage();
