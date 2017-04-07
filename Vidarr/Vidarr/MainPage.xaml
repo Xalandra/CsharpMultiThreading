@@ -6,8 +6,37 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay"  IsPaneOpen="False" 
+               CompactPaneLength="50" OpenPaneLength="150">
+        <SplitView.Pane>
+            <StackPanel Background="Gray">
+                <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Height="50" Background="Transparent" Click="HamburgerButton_Click" HorizontalAlignment="Stretch" Margin="0,0,100,0"/>
+                <StackPanel RequestedTheme="Light" Orientation="Horizontal">
+                    <Button x:Name="MenuButton1" FontFamily="Segoe MDL2 Assets" Content="&#xE825;"
+                    Width="50" Height="50" Background="Transparent"/>
+                    <TextBlock Text="Button 1" FontSize="18" VerticalAlignment="Center" />
+                    <TextBlock Text="Download" FontSize="18" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="MenuButton2" FontFamily="Segoe MDL2 Assets" Content="&#xE10F;"
+                        Width="50" Height="50" Background="Transparent" Click="MenuButton2_Click"/>
+                    <TextBlock Text="Converted" FontSize="18" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="MenuButton3" FontFamily="Segoe MDL2 Assets" Content="&#xE1D6;"
+                        Width="50" Height="50" Background="Transparent" Click="MenuButton3_Click"/>
+                    <TextBlock Text="Editor" FontSize="18" VerticalAlignment="Center" SelectionChanged="TextBlock_SelectionChanged" />
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </SplitView.Pane>
+        <SplitView.Content>
+            <Grid Background="Black">
+                <TextBlock Text="SplitView Basic" FontSize="54" Foreground="White"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="watVanWebsite" Text="Nog niks gedaan." FontSize="12" Foreground="White" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="620" Width="290"/>
+                <TextBox x:Name="inputZoekterm" HorizontalAlignment="Left" Margin="195,32,0,0" TextWrapping="Wrap" Text="Vul zoekterm in.." VerticalAlignment="Top" Width="110"/>
+            </Grid>
+        </SplitView.Content>
+    </SplitView>
 </Page>
