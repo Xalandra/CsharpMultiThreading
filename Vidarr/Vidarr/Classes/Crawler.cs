@@ -30,8 +30,8 @@ namespace Vidarr.Classes
 
             Task beginpuntCrawl = new Task(async() => {
                 await crawlBeginpunt();
-
-                //gaMaarCrawlen();
+                Debug.WriteLine("beginpunt voorbij zonder wachten");
+                gaMaarCrawlen();
             });
             beginpuntCrawl.Start();
         }
@@ -211,6 +211,7 @@ namespace Vidarr.Classes
             {
                 Debug.WriteLine("crawlBeginpunt() geeft NullReferenceException: " + e.Message);
             }
+            Debug.WriteLine("crawlBeginpunt is klaar");
         }
 
 
