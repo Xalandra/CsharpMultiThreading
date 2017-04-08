@@ -28,158 +28,17 @@ namespace Vidarr.Classes
             lijstResponsesKeywords = new List<string>();
             locker = new Object();
 
-            Task beginpuntCrawl = new Task(async() => {
+            Task beginpuntCrawl = new Task(async() => 
+            {
                 await crawlBeginpunt();
 
-                //gaMaarCrawlen();
+                gaMaarCrawlen();
             });
             beginpuntCrawl.Start();
+
         }
 
-        //zoek op userinput
-        public async Task<string> crawlZoekterm(string zoekterm)
-        {
-            httpClientRequest = new MaakHttpClientAan();
-            string httpResponseBody = await httpClientRequest.doeHttpRequestYoutubeMetZoektermEnGeefResults(zoekterm); //await = wacht totdat antwoord is
-
-            //haal de body uit de response
-            httpResponseBody = regexBody(httpResponseBody);
-            httpResponseBody = regexContent(httpResponseBody);
-            httpResponseBody = regexResults(httpResponseBody);
-
-            //bestandpicker in downloadsmap
-            FileSavePicker savePicker = new FileSavePicker();
-            savePicker.SuggestedStartLocation = PickerLocationId.Downloads;
-            savePicker.FileTypeChoices.Add("Simple Line Files", new List<string>() { ".txt" });
-            savePicker.SuggestedFileName = "httpResponseBody.txt";
-            StorageFile file = await savePicker.PickSaveFileAsync(); //await = wacht totdat antwoord is
-                                                                     //schrijf httpResponseBody naar txt bestand
-            await FileIO.WriteTextAsync(file, httpResponseBody);
-
-            /*lock (this.locker) {
-                //bodyresponse krijgt voorrang in de lijst
-                lijstResponses.Insert(0, httpResponseBody);
-            }*/
-            
-            Task crawlZoekterm = new Task(async() => {
-                //haal uit results urls
-                int maxUrls = 10;
-                int gevondenUrls = 0;
-                List<String> tijdelijkeUrls = new List<string>();
-
-                //haal urls uit body
-                string url = "";
-                string patternUrls = "href\\s*=\\s*(?:[\"'](?<1>[^\"']*)[\"']|(?<1>\\S+))"; //beste regex
-
-                //dan urls
-                MatchCollection collection = Regex.Matches(httpResponseBody, patternUrls);
-                foreach (Match m in collection)
-                {
-                    //check of er al 10 urls zijn gevonden
-                    if (gevondenUrls < maxUrls)
-                    {
-
-                        //check of geldige url is
-                        if (m.Success)
-                        {
-                            url = m.Value;
-
-                            //haal href=" er af
-                            url = url.Remove(0, 6);
-                            url = url.Remove(url.Length - 1);
-                            if (url.Contains("/watch?"))
-                            {
-                                url = "https://www.youtube.com" + url;
-                            }
-                            if (url.Contains("www.youtube.com") && !url.Contains("channel") && !url.Contains("user") && !url.Contains("playlist") && !url.Contains("feed") && !url.Contains("bit.ly") && !url.Contains("accounts.google"))
-                            {
-                                //Debug.WriteLine("Gevonden url: " + url);
-                                bool isUri = Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute);
-                                //Debug.WriteLine("bool: " + isUri);
-                                //correcte uri + nog geen 10 urls toegevoegd
-                                if (isUri && (gevondenUrls < maxUrls))
-                                {
-                                    tijdelijkeUrls.Add(url);
-                                    
-                                    gevondenUrls++;
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-
-
-
-                //ga over 10 gevonden urls
-                foreach (String tu in tijdelijkeUrls)
-                {
-                    //haal uit urls bodys
-                    string body = "";
-
-                    try
-                    {
-                        //getResponseBody url
-                        httpClientRequest = new MaakHttpClientAan();
-
-                        //welke url crawlen
-                        //Debug.WriteLine("url in getResponseBody() = " + url);
-
-                        string antwoord = await httpClientRequest.doeHttpRequestYoutubeVoorScrawlerEnGeefResults(tu); //await = wacht totdat antwoord is
-                        //Debug.WriteLine(antwoord);
-
-                        //haal body uit string
-                        body = regexBody(antwoord);
-                        body = regexContent(body);
-
-                    }
-                    catch (NullReferenceException e)
-                    {
-                        Debug.WriteLine("getResponseBody() geeft NullReferenceException: " + e.Message);
-                    }
-
-
-
-
-                    //haal uit bodys keys
-                    //haal keywords uit body
-                    string keywords = "";
-                    string pattern = "title=\"(.*?)</a>";
-                    MatchCollection collection2;
-                    try
-                    {
-                        collection2 = Regex.Matches(body, pattern);
-
-                        foreach (Match m in collection2)
-                        {
-                            //spuug uit van je gevonden hebt
-                            keywords = m.Value;
-                            //keywords in database!!!!!!!!!
-                            Debug.WriteLine("Gevonden keywords: " + keywords);
-                        }
-                    }
-                    catch (NullReferenceException e)
-                    {
-                        Debug.WriteLine("getKeywords() geeft NullReferenceException: " + e.Message);
-                    }
-                } //10 gehad
-
-
-
-
-
-                //show resultaten uit database
-            });
-            crawlZoekterm.Start();
-            
-            //return string van httpResponseBody
-            return httpResponseBody;
-        }
-
-        //zoek zonder input beginpunt
+        //zoek zonder input van user beginpunt
         public async Task crawlBeginpunt()
         {
             //beginpunt
@@ -194,8 +53,9 @@ namespace Vidarr.Classes
                     httpResponseBody = await httpClientRequest.doeHttpRequestYoutubeVoorScrawlerEnGeefResults(url);
 
                     //haal de body uit de response
-                    httpResponseBody = regexBody(httpResponseBody);
-                    httpResponseBody = regexContent(httpResponseBody);
+                    httpResponseBody = CrawlerRegex.regexBody(httpResponseBody);
+                    httpResponseBody = CrawlerRegex.regexContent(httpResponseBody);
+                    //Debug.WriteLine(httpResponseBody);
 
                     lock (this.locker)
                     {
@@ -206,6 +66,10 @@ namespace Vidarr.Classes
                 });
                 probeer.Start();
                 await probeer;
+
+                Debug.WriteLine("voorbij await probeer");
+                while (!probeer.IsCompleted) { }
+                gaMaarCrawlen();
             }
             catch (NullReferenceException e)
             {
@@ -223,23 +87,56 @@ namespace Vidarr.Classes
             //zolang true crawl maar door
             while (!finished)
             {
-                //als beginpunt responses heeft gevonden
-                if (lijstResponses.Count > 0)
+                
+                //voor testen max 50 rondes
+                if (aantalGecrawled < 10)
                 {
-                    //voor testen max 50 rondes
-                    if (aantalGecrawled < 5000)
+                    //pakt responsebody uit LijstResponses, urls komen in LijstUrls
+                    Task bodys = await Task.Factory.StartNew(async() =>
                     {
-                        //pakt responsebody uit LijstResponses, urls komen in LijstUrls
-                        Task bodys = await Task.Factory.StartNew(async() =>
+                        //Debug.WriteLine("Task gets urls uit body uit lijstResponses");
+                        try
                         {
-                            //Debug.WriteLine("Task gets urls uit body uit lijstResponses");
+                            string uitlijstResponses = pakUitQueue("responses");
+                            if (uitlijstResponses != "")
+                            {
+                                getUrls(uitlijstResponses);
+                            }
+                            else { Debug.WriteLine("Body uit queue == lege string."); }
+
+                            //getUrls(pakUitQueue("responses"));
+                        }
+                        catch (NullReferenceException e)
+                        {
+                            Debug.WriteLine("getUrls() in while geeft NullReferenceException: " + e.Message);
+                        }
+
+                        //wacht even met verder gaan
+                        await Task.Delay(1000);
+
+                        aantalGecrawled++;
+                    });
+                    //get meer bodys
+                    for (int i = 0; i < 10; i++)
+                    {
+                        //pakt url van LijstUrls, Responsebody komt in LijstResponses
+                        Task urls = await Task.Factory.StartNew(async () =>
+                        {
+                            //Debug.WriteLine("Task gets body uit url uit lijstUrls");
                             try
                             {
-                                getUrls(pakUitQueue("responses"));
+                                string uitlijstUrls = pakUitQueue("urls");
+                                Debug.WriteLine("Url uit queue: " + uitlijstUrls);
+                                if (!uitlijstUrls.Equals(""))
+                                {
+                                    await getResponseBody(uitlijstUrls);
+                                }
+                                else { Debug.WriteLine("Url uit queue == lege string."); }
+                                   
                             }
                             catch (NullReferenceException e)
                             {
-                                Debug.WriteLine("getUrls() in while geeft NullReferenceException: " + e.Message);
+                                Debug.WriteLine("getResponseBody() in while geeft NullReferenceException: " + e.Message);
                             }
 
                             //wacht even met verder gaan
@@ -247,227 +144,66 @@ namespace Vidarr.Classes
 
                             aantalGecrawled++;
                         });
-                        //get meer bodys
-                        for (int i = 0; i < 10; i++)
-                        {
-                            //pakt url van LijstUrls, Responsebody komt in LijstResponses
-                            Task urls = await Task.Factory.StartNew(async () =>
-                            {
-                                //Debug.WriteLine("Task gets body uit url uit lijstUrls");
-                                try
-                                {
-                                    await getResponseBody(pakUitQueue("urls"));
-                                }
-                                catch (NullReferenceException e)
-                                {
-                                    Debug.WriteLine("getResponseBody() in while geeft NullReferenceException: " + e.Message);
-                                }
-
-                                //wacht even met verder gaan
-                                await Task.Delay(1000);
-
-                                aantalGecrawled++;
-                            });
-                        }
-                        //pakt maar verwijdert niet responsebody uit lijstresponses, keywords komen in database
-                        Task keys = await Task.Factory.StartNew(async() =>
-                        {
-                            //Debug.WriteLine("Task gets keywords uit body uit lijstResponses");
-                            try
-                            {
-                                getKeywords(pakUitQueue("keywords"));
-                            }
-                            catch (NullReferenceException e)
-                            {
-                                Debug.WriteLine("getKeywords() in while geeft NullReferenceException: " + e.Message);
-                            }
-
-                            //wacht even met verder gaan
-                            await Task.Delay(1000);
-
-                            aantalGecrawled++;
-                        });
-
                     }
-                    else
+                    //pakt maar verwijdert niet responsebody uit lijstresponses, keywords komen in database
+                    Task keys = await Task.Factory.StartNew(async() =>
                     {
-                        //stop met crawlen omdat aantal meer is dan 50
-                        finished = true;
+                        //Debug.WriteLine("Task gets keywords uit body uit lijstResponses");
+                        try
+                        {
+                            getKeywords(pakUitQueue("keywords"));
+                        }
+                        catch (NullReferenceException e)
+                        {
+                            Debug.WriteLine("getKeywords() in while geeft NullReferenceException: " + e.Message);
+                        }
 
-                        Debug.WriteLine("aantalGecrawled max bereikt");
-                    }
+                        //wacht even met verder gaan
+                        await Task.Delay(1000);
+
+                        aantalGecrawled++;
+                    });
+
                 }
                 else
                 {
-                    //Debug.WriteLine("beginpunt heeft nog geen responses gevonden..");
+                    //stop met crawlen omdat aantal meer is dan 50
+                    finished = true;
 
-                    try
-                    {
-                        lock (this.locker)
-                        {
-                            for (int i = 0; lijstUrls.Count > i; i++)
-                            {
-                                Debug.WriteLine("Lijst[" + i + "] = " + lijstUrls[i]);
-                            }
-                        }
-                    }
-                    catch (NullReferenceException e)
-                    {
-                        Debug.WriteLine("getKeywords() geeft NullReferenceException: " + e.Message);
-                    }
+                    Debug.WriteLine("aantalGecrawled max bereikt");
                 }
+                
 
-            }
-        }
-
-
-
-
-
-
-
-
-
-
-
-        //haal body uit httpResponseBody
-        public string regexBody(string response)
-        {
-            //haal body uit string
-            string body = "";
-            string patternBody = @"<body\s(.*?)</body>";
-
-            Match match = Regex.Match(response, patternBody, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-            if (match.Success)
-            {
-                body = match.Value;
-                //Debug.WriteLine(body);
-            }
-            else
-            {
-                //Debug.WriteLine("Geen body kunnen vinden.");
-            }
-            return body;
-        }
-
-        //haal content uit httpResponseBody
-        public string regexContent(string response)
-        {
-            //haal body uit string
-            string body = "";
-            string patternBody = "id=[\"']content[\"'](.*?)footer";
-
-            Match match = Regex.Match(response, patternBody, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-            if (match.Success)
-            {
-                body = match.Value;
-                //Debug.WriteLine(body);
-            }
-            else
-            {
-                //Debug.WriteLine("Geen content kunnen vinden.");
-            }
-            return body;
-        }
-
-        //haal results uit httpResponseBody
-        public string regexResults(string response)
-        {
-            //haal body uit string
-            string body = "";
-            string patternBody = "id=[\"']results[\"'](.*?)class=[\"']branded-page-box\\s*";
-
-            Match match = Regex.Match(response, patternBody, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-            if (match.Success)
-            {
-                body = match.Value;
-                //Debug.WriteLine(body);
-            }
-            else
-            {
-                //Debug.WriteLine("Geen results kunnen vinden.");
-            }
-            return body;
-        }
-
-        //haal urls uit content
-        public void regexUrls(string response)
-        {
-            int maxUrls = 10;
-            int gevondenUrls = 0;
-            
-            //haal urls uit body
-            string url = "";
-            string patternUrls = "href\\s*=\\s*(?:[\"'](?<1>[^\"']*)[\"']|(?<1>\\S+))"; //beste regex
-
-            //dan urls
-            MatchCollection collection = Regex.Matches(response, patternUrls);
-            foreach (Match m in collection)
-            {
-                //check of er al 10 urls zijn gevonden
-                if (gevondenUrls < maxUrls)
+                /*try
                 {
-
-                    //check of geldige url is
-                    if (m.Success)
+                    lock (this.locker)
                     {
-                        url = m.Value;
-
-                        //haal href=" er af
-                        url = url.Remove(0, 6);
-                        url = url.Remove(url.Length - 1);
-                        if (url.Contains("/watch?"))
+                        for (int i = 0; lijstUrls.Count > i; i++)
                         {
-                            url = "https://www.youtube.com" + url;
-                        }
-                        if (url.Contains("www.youtube.com") && !url.Contains("channel") && !url.Contains("user") && !url.Contains("playlist") && !url.Contains("feed") && !url.Contains("bit.ly") && !url.Contains("accounts.google"))
-                        {
-                            //Debug.WriteLine("Gevonden url: " + url);
-                            bool isUri = Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute);
-                            //Debug.WriteLine("bool: " + isUri);
-                            //correcte uri + nog geen 10 urls toegevoegd
-                            if (isUri && (gevondenUrls < maxUrls))
-                            {
-                                lock (this.locker)
-                                {
-                                    lijstUrls.Add(url);
-                                }
-                                gevondenUrls++;
-                            }
+                            Debug.WriteLine("Lijst[" + i + "] = " + lijstUrls[i]);
                         }
                     }
                 }
-                else
+                catch (NullReferenceException e)
                 {
-                    break;
-                }
+                    Debug.WriteLine("getKeywords() geeft NullReferenceException: " + e.Message);
+                }*/
+                
+
             }
         }
 
-        //haal keywords uit content
-        public void regexKeywords(string response)
-        {
-            //haal keywords uit body
-            string keywords = "";
-            string pattern = "title=\"(.*?)</a>";
-            MatchCollection collection;
-            try
-            {
-                collection = Regex.Matches(response, pattern);
 
-                foreach (Match m in collection)
-                {
-                    //spuug uit van je gevonden hebt
-                    keywords = m.Value;
-                    //keywords in database!!!!!!!!!
-                    Debug.WriteLine("Gevonden keywords: " + keywords);
-                }
-            }
-            catch (NullReferenceException e) {
-                Debug.WriteLine("getKeywords() geeft NullReferenceException: " + e.Message);
-            }
-            
-        }
+
+
+
+
+
+
+
+
+
+        
 
 
 
@@ -483,7 +219,7 @@ namespace Vidarr.Classes
         public async Task<string> getResponseBody(string url)
         {
             string body = "";
-
+            
             try
             {
                 //getResponseBody url
@@ -496,14 +232,17 @@ namespace Vidarr.Classes
                 //Debug.WriteLine(antwoord);
 
                 //haal body uit string
-                body = regexBody(antwoord);
-                body = regexContent(body);
+                body = CrawlerRegex.regexBody(antwoord);
+                body = CrawlerRegex.regexContent(body);
+
 
                 lock (this.locker)
                 {
+                    Debug.WriteLine("Wat doe jij in lijstResponses? " + body);
                     lijstResponses.Add(body);
                     lijstResponsesKeywords.Add(body);
                 }
+
             }
             catch (NullReferenceException e)
             {
@@ -518,7 +257,18 @@ namespace Vidarr.Classes
         {
             try
             {
-                regexUrls(httpResponseBody);
+                String[] gevondenUrls = CrawlerRegex.regexUrls(httpResponseBody);
+                //toevoegen aan lijstUrls
+                lock (this.locker)
+                {
+                    foreach (string url in gevondenUrls)
+                    {
+                        Debug.WriteLine("Wat doe jij in lijstUrls? "+url);
+                        lijstUrls.Add(url);
+                        //Debug.WriteLine("Gevonden url uit regexclasse: " + url); //deze is af en toe leeg??
+                    }
+                }
+                
             }
             catch (NullReferenceException e)
             {
@@ -530,7 +280,7 @@ namespace Vidarr.Classes
         {
             try
             {
-                regexKeywords(httpResponseBody);
+                CrawlerRegex.regexKeywords(httpResponseBody);
             }
             catch (NullReferenceException e)
             {
@@ -561,6 +311,7 @@ namespace Vidarr.Classes
                     {
                         string x = lijstUrls[0];
                         lijstUrls.Remove(lijstUrls[0]);
+                        Debug.WriteLine("pakUitQueue(lijst) geeft terug: " + x);
                         res = x;
                     }
                     else

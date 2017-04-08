@@ -36,9 +36,9 @@
                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock x:Name="watVanWebsite" Text="Nog niks gedaan." FontSize="12" Foreground="White" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="620" Width="290"/>
                 <TextBox x:Name="inputZoekterm" HorizontalAlignment="Left" Margin="195,32,0,0" TextWrapping="Wrap" Text="Vul zoekterm in.." VerticalAlignment="Top" Width="110"/>
-                <Button Content="Button" HorizontalAlignment="Left" Margin="920,345,0,0" VerticalAlignment="Top" Background="Red" Click="Button_Click"/>
+                <Button Content="Button" HorizontalAlignment="Left" Margin="422,345,0,0" VerticalAlignment="Top" Background="Red" Click="Button_Click" Width="135"/>
 
-                <StackPanel>
+                <StackPanel Margin="533,0,0,283">
                     <TextBox Name="NewBlogUrl"></TextBox>
                     <Button Click="Add_Click" Background="#FFFFF811">Add</Button>
                     <ListView Name="Videos" Foreground="White">

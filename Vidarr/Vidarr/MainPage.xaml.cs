@@ -30,6 +30,7 @@ namespace Vidarr
         public MainPage()
         {
             this.InitializeComponent();
+            
             crawler = new Crawler();
         }
 
@@ -89,7 +90,7 @@ namespace Vidarr
         private async void zoekButton_Click(object sender, RoutedEventArgs e)
         {
             //haal info van website en stop in txt bestand
-            watVanWebsite.Text = await crawler.crawlZoekterm(inputZoekterm.Text);
+            watVanWebsite.Text = await ZoekZoekterm.crawlZoekterm(inputZoekterm.Text);
         }
     }
 }
