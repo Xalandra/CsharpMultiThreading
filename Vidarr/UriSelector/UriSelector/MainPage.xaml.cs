@@ -30,10 +30,10 @@ namespace UriSelector
 
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private async void button_Click(object sender, RoutedEventArgs e)
         {
             textBox1.Text = URI.GetYoutubeVideoId(textBox.Text);
-            textBox2.Text = URI.GetYouTubeVideoTitle(textBox.Text);
+            textBox2.Text = await URI.GetYouTubeVideoTitle(textBox.Text);
            
         }
     }

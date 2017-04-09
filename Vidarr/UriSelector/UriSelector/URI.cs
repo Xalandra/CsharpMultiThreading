@@ -19,7 +19,7 @@ namespace UriSelector
         {
         }
 
-        public async Task<string>ExecuteGETRequest()
+        public static async Task<string>ExecuteGETRequest()
         {
             string url = "https://www.youtube.com/watch?v=Q3N7j8RsKxk";
             HttpWebRequest request = HttpWebRequest.CreateHttp(url);
@@ -43,9 +43,9 @@ namespace UriSelector
         }
 
 
-        public static string GetYouTubeVideoTitle(string youtubeLinkUrl)
+        public static async Task<string> GetYouTubeVideoTitle(string youtubeLinkUrl)
         {
-            string response = ExecuteGETRequest(),
+            string response = await ExecuteGETRequest(),
                      title = response.Substring(response.IndexOf("<title>\n") + 8);
 
             title = title.Substring(0, title.IndexOf("\n"));
