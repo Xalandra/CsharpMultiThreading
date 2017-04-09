@@ -36,7 +36,7 @@ namespace Vidarr.Classes
             beginpuntCrawl.Start();
         }
 
-        //start crawlen
+        //start crawlen is een task
         public async void startCrawlen() {
             beginGelukt = await crawlBeginpunt();
 
@@ -87,62 +87,37 @@ namespace Vidarr.Classes
             //zolang true crawl maar door
             while (!finished)
             {
-                
                 //voor testen max 50 rondes
-                if (aantalGecrawled < 10)
+                if (aantalGecrawled < 100)
                 {
-                    //pakt responsebody uit LijstResponses, urls komen in LijstUrls
-                    //Debug.WriteLine("Task gets urls uit body uit lijstResponses");
-                    try
+                    //pak alleen uit lijstResponses als lijstUrls minder dan 10 heeft;
+                    if (lijstUrls.Count < 10)
                     {
-                        getUrls(pakUitQueue("responses"));
-                    }
-                    catch (NullReferenceException e)
-                    {
-                        Debug.WriteLine("getUrls() in while geeft NullReferenceException: " + e.Message);
-                    }
-                    //wacht even met verder gaan
-                    await Task.Delay(1000);
-                    aantalGecrawled++;
-
-
-                    //get meer bodys
-                    for (int i = 0; i < 10; i++)
-                    {
-                        bool zegtNiksMaarWachtOpStringAntwoord = false;
-
-                        //pakt url van LijstUrls, Responsebody komt in LijstResponses
-                        //Debug.WriteLine("Task gets body uit url uit lijstUrls");
-                        try
-                        {
-                            zegtNiksMaarWachtOpStringAntwoord = await getResponseBody(pakUitQueue("urls"));
-                        }
-                        catch (NullReferenceException e)
-                        {
-                            Debug.WriteLine("getResponseBody() in while geeft NullReferenceException: " + e.Message);
-                        }
-                        //wacht even met verder gaan
-                        await Task.Delay(1000);
+                        getUrls(pakUitQueue("responses")); //vult lijstUrls bij
                         aantalGecrawled++;
-
-                        Debug.WriteLine("antwoord van getResponseBody: " + zegtNiksMaarWachtOpStringAntwoord);
                     }
 
-
-                    //pakt maar verwijdert niet responsebody uit lijstresponses, keywords komen in database
-                    //Debug.WriteLine("Task gets keywords uit body uit lijstResponses");
-                    try
+                    //haal 10 bodies op
+                    for (int i = 0; i < 15; i++)
                     {
+                        //pak eerste url en haal body eruit
+                        string body = await getResponseBody(pakUitQueue("urls")); //vult lijstResponses(Keywords) aan
+                        //zet body in de twee bodylijsten
+                        lock (this.locker)
+                        {
+                            lijstResponses.Add(body);
+                            lijstResponsesKeywords.Add(body);
+                        }
+                        aantalGecrawled++;
+                    }
+
+                    //pak uit lijstResponsesKeywords zolang er een body in zit
+                    while (lijstResponsesKeywords.Count > 0)
+                    {
+                        //haal keywords uit body uit lijstResponsesKeywords
                         getKeywords(pakUitQueue("keywords"));
+                        aantalGecrawled++;
                     }
-                    catch (NullReferenceException e)
-                    {
-                        Debug.WriteLine("getKeywords() in while geeft NullReferenceException: " + e.Message);
-                    }
-                    //wacht even met verder gaan
-                    await Task.Delay(1000);
-                    aantalGecrawled++;
-
                 }
                 else
                 {
@@ -151,24 +126,6 @@ namespace Vidarr.Classes
 
                     Debug.WriteLine("aantalGecrawled max bereikt");
                 }
-                
-
-                /*try
-                {
-                    lock (this.locker)
-                    {
-                        for (int i = 0; lijstUrls.Count > i; i++)
-                        {
-                            Debug.WriteLine("Lijst[" + i + "] = " + lijstUrls[i]);
-                        }
-                    }
-                }
-                catch (NullReferenceException e)
-                {
-                    Debug.WriteLine("getKeywords() geeft NullReferenceException: " + e.Message);
-                }*/
-                
-
             }
         }
 
@@ -195,47 +152,23 @@ namespace Vidarr.Classes
 
 
 
-        public async Task<bool> getResponseBody(string url)
+        public async Task<string> getResponseBody(string url)
         //public async void getResponseBody(string url)
         {
-            bool bodyGelukt = false;
-            
-            try
-            {
-                Debug.WriteLine("getResponseBody starts");
+            string antwoord = "";
+            Debug.WriteLine("getResponseBody starts");
 
-                //getResponseBody url
-                httpClientRequest = new MaakHttpClientAan();
+            //getResponseBody url
+            httpClientRequest = new MaakHttpClientAan();
 
-                string body = "";
+            //welke url crawlen
+            Debug.WriteLine("url in getResponseBody() = " + url);
 
-                //welke url crawlen
-                Debug.WriteLine("url in getResponseBody() = " + url);
+            //als de methode public async void getResponseBody() dan geeft de volgende reden een error dat antwoord niet null mag zijn
+            antwoord = await httpClientRequest.doeHttpRequestYoutubeVoorScrawlerEnGeefResults(url); //await = wacht totdat antwoord is
+            //Debug.WriteLine(antwoord);
 
-                //als de methode public async void getResponseBody() dan geeft de volgende reden een error dat antwoord niet null mag zijn
-                string antwoord = await httpClientRequest.doeHttpRequestYoutubeVoorScrawlerEnGeefResults(url); //await = wacht totdat antwoord is
-                //Debug.WriteLine(antwoord);
-
-                //haal body uit string
-                //body = CrawlerRegex.regexBody(antwoord);
-                //body = CrawlerRegex.regexContent(body);
-                body = regexContent(antwoord);
-
-                lock (this.locker)
-                {
-                    lijstResponses.Add(body);
-                    lijstResponsesKeywords.Add(body);
-                    bodyGelukt = true;
-                }
-
-            }
-            catch (NullReferenceException e)
-            {
-                Debug.WriteLine("getResponseBody() geeft NullReferenceException: " + e.Message);
-            }
-
-            return bodyGelukt;
-
+            return antwoord;
         }
 
         public void getUrls(string httpResponseBody)
@@ -378,10 +311,7 @@ namespace Vidarr.Classes
                 body = match.Value;
                 //Debug.WriteLine(body);
             }
-            else
-            {
-                Debug.WriteLine("Geen content kunnen vinden.");
-            }
+            //else{ Debug.WriteLine("Geen content kunnen vinden.");}
             return body;
         }
 
@@ -453,7 +383,6 @@ namespace Vidarr.Classes
             try
             {
                 collection = Regex.Matches(response, pattern);
-
                 foreach (Match m in collection)
                 {
                     //spuug uit van je gevonden hebt
