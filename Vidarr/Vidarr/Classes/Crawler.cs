@@ -102,13 +102,17 @@ namespace Vidarr.Classes
                     {
                         //pak eerste url en haal body eruit
                         string body = await getResponseBody(pakUitQueue("urls")); //vult lijstResponses(Keywords) aan
-                        //zet body in de twee bodylijsten
-                        lock (this.locker)
+                        //als body niet lege string is, lege string kan komen door foute url in httprequest
+                        if (!body.Equals(""))
                         {
-                            lijstResponses.Add(body);
-                            lijstResponsesKeywords.Add(body);
+                            //zet body in de twee bodylijsten
+                            lock (this.locker)
+                            {
+                                lijstResponses.Add(body);
+                                lijstResponsesKeywords.Add(body);
+                            }
+                            aantalGecrawled++;
                         }
-                        aantalGecrawled++;
                     }
 
                     //pak uit lijstResponsesKeywords zolang er een body in zit
@@ -164,9 +168,16 @@ namespace Vidarr.Classes
             //welke url crawlen
             Debug.WriteLine("url in getResponseBody() = " + url);
 
-            //als de methode public async void getResponseBody() dan geeft de volgende reden een error dat antwoord niet null mag zijn
-            antwoord = await httpClientRequest.doeHttpRequestYoutubeVoorScrawlerEnGeefResults(url); //await = wacht totdat antwoord is
-            //Debug.WriteLine(antwoord);
+            try
+            {
+                antwoord = await httpClientRequest.doeHttpRequestYoutubeVoorScrawlerEnGeefResults(url); //await = wacht totdat antwoord is
+                //Debug.WriteLine(antwoord);
+            }
+            catch (Exception ex)
+            {
+                //als httprequest bijv door foute url een error terug geeft
+                Debug.WriteLine("httpError: " + ex.StackTrace);
+            }
 
             return antwoord;
         }

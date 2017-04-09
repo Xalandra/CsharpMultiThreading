@@ -14,7 +14,9 @@ namespace Vidarr.Classes
 
         public MaakHttpClientAan() {
             //httpClient = maakHttpClient();
-            Task.Factory.StartNew(()=> { httpClient = maakHttpClient(); });
+            Task.Factory.StartNew(()=> {
+                httpClient = maakHttpClient();
+            });
         }
 
         public HttpClient maakHttpClient()
