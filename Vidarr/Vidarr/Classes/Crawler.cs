@@ -59,8 +59,8 @@ namespace Vidarr.Classes
 
                 //haal de body uit de response
                 //httpResponseBody = CrawlerRegex.regexBody(httpResponseBody);
-                //httpResponseBody = CrawlerRegex.regexContent(httpResponseBody);
-                httpResponseBody = regexContent(httpResponseBody);
+                httpResponseBody = CrawlerRegex.regexContent(httpResponseBody);
+                //httpResponseBody = regexContent(httpResponseBody);
                 //Debug.WriteLine(httpResponseBody);
 
                 lock (this.locker)
@@ -90,14 +90,14 @@ namespace Vidarr.Classes
                 //voor testen max 50 rondes
                 if (aantalGecrawled < 100)
                 {
-                    //pak alleen uit lijstResponses als lijstUrls minder dan 10 heeft;
-                    if (lijstUrls.Count < 10)
+                    //pak alleen uit lijstResponses als lijstUrls minder dan 16 heeft;
+                    if (lijstUrls.Count < 16)
                     {
                         getUrls(pakUitQueue("responses")); //vult lijstUrls bij
                         aantalGecrawled++;
                     }
 
-                    //haal 10 bodies op
+                    //haal 15 bodies op
                     for (int i = 0; i < 15; i++)
                     {
                         //pak eerste url en haal body eruit
@@ -109,7 +109,7 @@ namespace Vidarr.Classes
                             lock (this.locker)
                             {
                                 lijstResponses.Add(body);
-                                lijstResponsesKeywords.Add(body);
+                                //lijstResponsesKeywords.Add(body);
                             }
                             aantalGecrawled++;
                         }
@@ -186,15 +186,15 @@ namespace Vidarr.Classes
         {
             try
             {
-                //String[] gevondenUrls = CrawlerRegex.regexUrls(httpResponseBody);
-                List<string> gevondenUrls = regexUrls(httpResponseBody);
+                List<string> gevondenUrls = CrawlerRegex.regexUrls(httpResponseBody);
+                //List<string> gevondenUrls = regexUrls(httpResponseBody);
                 //toevoegen aan lijstUrls
                 lock (this.locker)
                 {
                     foreach (string url in gevondenUrls)
                     {
                         lijstUrls.Add(url);
-                        Debug.WriteLine("getUrls: " + url);
+                        //Debug.WriteLine("getUrls: " + url);
                     }
                 }
                 
@@ -209,8 +209,8 @@ namespace Vidarr.Classes
         {
             try
             {
-                //CrawlerRegex.regexKeywords(httpResponseBody);
-                regexKeywords(httpResponseBody);
+                CrawlerRegex.regexKeywords(httpResponseBody);
+                //regexKeywords(httpResponseBody);
             }
             catch (NullReferenceException e)
             {
@@ -289,6 +289,12 @@ namespace Vidarr.Classes
             }
         }
 
+
+
+
+
+
+        /*
         //haal body uit httpResponseBody
         static public string regexBody(string response)
         {
@@ -409,5 +415,6 @@ namespace Vidarr.Classes
             }
 
         }
+        */
     }
 }
