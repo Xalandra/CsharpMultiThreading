@@ -1,0 +1,20 @@
+﻿<Page
+    x:Class="UriSelector.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UriSelector"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="174,35,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="29" Width="233"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="174,10,0,0" TextWrapping="Wrap" Text="Video URL" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Margin="174,97,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="233"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="174,72,0,0" TextWrapping="Wrap" Text="Video ID" VerticalAlignment="Top"/>
+        <Button x:Name="button" Content="Klik deze shizzle" HorizontalAlignment="Left" Margin="174,318,0,0" VerticalAlignment="Top" Width="233" Click="button_Click"/>
+        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="174,134,0,0" TextWrapping="Wrap" Text="Titel" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBox2" HorizontalAlignment="Left" Margin="174,159,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="233"/>
+
+    </Grid>
+</Page>
