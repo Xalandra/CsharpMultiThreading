@@ -2,3 +2,4 @@ obj/
 .vs/
 bin/
 Vidarr/Vidarr/project.lock.json
+Vidarr/Uwp youtube downloader/C#/YoutubeDownloaderUWP/project.lock.json
