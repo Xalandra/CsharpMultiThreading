@@ -91,14 +91,14 @@ namespace Vidarr.Classes
                 if (aantalGecrawled < 100)
                 {
                     //pak alleen uit lijstResponses als lijstUrls minder dan 16 heeft;
-                    if (lijstUrls.Count < 16)
+                    if (lijstUrls.Count < 11)
                     {
                         getUrls(pakUitQueue("responses")); //vult lijstUrls bij
                         aantalGecrawled++;
                     }
 
                     //haal 15 bodies op
-                    for (int i = 0; i < 15; i++)
+                    for (int i = 0; i < 10; i++)
                     {
                         //pak eerste url en haal body eruit
                         string body = await getResponseBody(pakUitQueue("urls")); //vult lijstResponses(Keywords) aan
@@ -109,7 +109,7 @@ namespace Vidarr.Classes
                             lock (this.locker)
                             {
                                 lijstResponses.Add(body);
-                                //lijstResponsesKeywords.Add(body);
+                                lijstResponsesKeywords.Add(body);
                             }
                             aantalGecrawled++;
                         }
@@ -120,7 +120,7 @@ namespace Vidarr.Classes
                     {
                         //haal keywords uit body uit lijstResponsesKeywords
                         getKeywords(pakUitQueue("keywords"));
-                        aantalGecrawled++;
+                        //aantalGecrawled++;
                     }
                 }
                 else
