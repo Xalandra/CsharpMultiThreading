@@ -5,13 +5,8 @@
     xmlns:local="using:Vidarr"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-<<<<<<< HEAD
-    mc:Ignorable="d">
-    
-=======
     mc:Ignorable="d"
     Loaded="Page_Loaded">
->>>>>>> fa1343c82dbc87a93ffaab00a89b4c1c693925ce
     <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay"  IsPaneOpen="False" 
                CompactPaneLength="50" OpenPaneLength="150">
         <SplitView.Pane>
