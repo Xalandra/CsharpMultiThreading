@@ -53,7 +53,7 @@ namespace Vidarr
 
         private void MenuButton2_Click(object sender, RoutedEventArgs e)
         {
-            
+            this.Frame.Navigate(typeof(Convert));
         }
 
         private void MenuButton3_Click(object sender, RoutedEventArgs e)
