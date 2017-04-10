@@ -136,7 +136,8 @@ namespace Vidarr.Classes
         {
             //haal keywords uit body
             string keywords = "";
-            string pattern = "title=\"(.*?)</a>";
+            //string pattern = "title=\"(.*?)</a>";
+            string pattern = "(<meta itemprop=\"|<link itemprop=\"thumbnailUrl\")(.*?)\">";
             MatchCollection collection;
             try
             {
