@@ -55,6 +55,7 @@
                 </StackPanel>
                 <Button x:Name="zoekButton" Content="Button" HorizontalAlignment="Left" Margin="352,49,0,0" VerticalAlignment="Top" Background="#FF8E00CA" Click="zoekButton_Click"/>
                 <Button Content="Database connectie (force encoding werkt niet) :C" HorizontalAlignment="Left" Margin="696,215,0,0" VerticalAlignment="Top" Height="62" Width="392" Background="#FF0734F6" Click="Button_Click_1Async"/>
+                <TextBlock x:Name="dbTextBox" HorizontalAlignment="Left" Margin="1345,32,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
 
                 <!--<Grid.RowDefinitions>
                     <RowDefinition Height="24*"/>

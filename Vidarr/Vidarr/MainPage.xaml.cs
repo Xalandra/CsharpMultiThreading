@@ -167,14 +167,18 @@ namespace Vidarr
                 conn = new MySqlConnection(myConnectionString);
                 MySqlCommand cmd = new MySqlCommand();
                 MySqlDataReader reader;
+
                 
 
-
-                cmd.CommandText = "SELECT * FROM video";
+                //cmd.CommandText = "SELECT * FROM video";
+                cmd.CommandText = "INSERT INTO video(Url,Title,Description,Genre,Thumbnail) VALUES('url','titlehere','Cooldescription','Rap','imagehere')";
+                conn.Open();
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = conn;
-                conn.Open();
+                cmd.ExecuteNonQuery();
                 reader = cmd.ExecuteReader();
+
+
             }
             catch (MySqlException ex)
             {
