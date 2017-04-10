@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vidarr", "Vidarr\Vidarr.csproj", "{C01E69DF-063F-4F35-8323-3AA916099ACF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UriSelector", "UriSelector\UriSelector\UriSelector.csproj", "{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoutubeDownloaderUWP", "Uwp youtube downloader\C#\YoutubeDownloaderUWP\YoutubeDownloaderUWP.csproj", "{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,42 @@ Global
 		{C01E69DF-063F-4F35-8323-3AA916099ACF}.Release|x86.ActiveCfg = Release|x86
 		{C01E69DF-063F-4F35-8323-3AA916099ACF}.Release|x86.Build.0 = Release|x86
 		{C01E69DF-063F-4F35-8323-3AA916099ACF}.Release|x86.Deploy.0 = Release|x86
+		{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}.Debug|ARM.ActiveCfg = Debug|ARM
+		{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}.Debug|ARM.Build.0 = Debug|ARM
+		{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}.Debug|ARM.Deploy.0 = Debug|ARM
+		{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}.Debug|x64.ActiveCfg = Debug|x64
+		{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}.Debug|x64.Build.0 = Debug|x64
+		{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}.Debug|x64.Deploy.0 = Debug|x64
+		{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}.Debug|x86.ActiveCfg = Debug|x86
+		{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}.Debug|x86.Build.0 = Debug|x86
+		{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}.Debug|x86.Deploy.0 = Debug|x86
+		{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}.Release|ARM.ActiveCfg = Release|ARM
+		{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}.Release|ARM.Build.0 = Release|ARM
+		{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}.Release|ARM.Deploy.0 = Release|ARM
+		{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}.Release|x64.ActiveCfg = Release|x64
+		{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}.Release|x64.Build.0 = Release|x64
+		{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}.Release|x64.Deploy.0 = Release|x64
+		{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}.Release|x86.ActiveCfg = Release|x86
+		{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}.Release|x86.Build.0 = Release|x86
+		{1330D333-2C1A-4B5D-B3C7-14B80EDF8BCF}.Release|x86.Deploy.0 = Release|x86
+		{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}.Debug|ARM.ActiveCfg = Debug|ARM
+		{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}.Debug|ARM.Build.0 = Debug|ARM
+		{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}.Debug|ARM.Deploy.0 = Debug|ARM
+		{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}.Debug|x64.ActiveCfg = Debug|x64
+		{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}.Debug|x64.Build.0 = Debug|x64
+		{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}.Debug|x64.Deploy.0 = Debug|x64
+		{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}.Debug|x86.ActiveCfg = Debug|x86
+		{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}.Debug|x86.Build.0 = Debug|x86
+		{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}.Debug|x86.Deploy.0 = Debug|x86
+		{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}.Release|ARM.ActiveCfg = Release|ARM
+		{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}.Release|ARM.Build.0 = Release|ARM
+		{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}.Release|ARM.Deploy.0 = Release|ARM
+		{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}.Release|x64.ActiveCfg = Release|x64
+		{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}.Release|x64.Build.0 = Release|x64
+		{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}.Release|x64.Deploy.0 = Release|x64
+		{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}.Release|x86.ActiveCfg = Release|x86
+		{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}.Release|x86.Build.0 = Release|x86
+		{ECE2C091-CF0B-490C-91E1-35DCC744D6C8}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

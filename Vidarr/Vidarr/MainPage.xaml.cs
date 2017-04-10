@@ -30,6 +30,7 @@ namespace Vidarr
         public MainPage()
         {
             this.InitializeComponent();
+            
             crawler = new Crawler();
         }
 
@@ -38,15 +39,21 @@ namespace Vidarr
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
 
+
+        private void MenuButton1_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Download));
+
+        }
+
         private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private async void MenuButton2_Click(object sender, RoutedEventArgs e)
+        private void MenuButton2_Click(object sender, RoutedEventArgs e)
         {
-            //haal info van website en stop in txt bestand
-            watVanWebsite.Text = await crawler.crawlZoekterm(inputZoekterm.Text);
+            
         }
 
         private void MenuButton3_Click(object sender, RoutedEventArgs e)
@@ -55,6 +62,35 @@ namespace Vidarr
             //tj.zetOmNaarXML();
         }
 
-        
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            crawler.outputLists();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            using (var db = new BloggingContext())
+            {
+                Videos.ItemsSource = db.Videos.ToList();
+            }
+        }
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            using (var db = new BloggingContext())
+            {
+                var blog = new Videos { Url = NewBlogUrl.Text };
+                db.Videos.Add(blog);
+                db.SaveChanges();
+
+                Videos.ItemsSource = db.Videos.ToList();
+            }
+        }
+
+        private async void zoekButton_Click(object sender, RoutedEventArgs e)
+        {
+            //haal info van website en stop in txt bestand
+            watVanWebsite.Text = await ZoekZoekterm.crawlZoekterm(inputZoekterm.Text);
+        }
     }
 }
