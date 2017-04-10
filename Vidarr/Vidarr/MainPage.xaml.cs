@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -71,19 +72,35 @@ namespace Vidarr
         {
             using (var db = new BloggingContext())
             {
+                //Videos.ItemsSource = db.Videos.ToList();
                 Videos.ItemsSource = db.Videos.ToList();
+
+                //ListBox1.Items.Add(db.Videos.);
             }
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
+            //using (var db = new BloggingContext())
+            //{
+            //    var blog = new Videos { Url = NewBlogUrl.Text };
+            //    db.Videos.Add(blog);
+            //    db.SaveChanges();
+
+            //    Videos.ItemsSource = db.Videos.ToList();
+            //}
+            //IList vidItems = (IList)Videos.ItemsSource;
             using (var db = new BloggingContext())
             {
-                var blog = new Videos { Url = NewBlogUrl.Text };
-                db.Videos.Add(blog);
-                db.SaveChanges();
+                
+                var vidItems = db.Videos.Select(v => v.Url).ToList();
+                foreach (var v in vidItems.Take(4))
+                {
 
-                Videos.ItemsSource = db.Videos.ToList();
+                    //Debug.WriteLine(v);
+                    //ListBox1.Items.Add(v);
+                }
+                
             }
         }
 
@@ -91,6 +108,11 @@ namespace Vidarr
         {
             //haal info van website en stop in txt bestand
             watVanWebsite.Text = await ZoekZoekterm.crawlZoekterm(inputZoekterm.Text);
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
         }
     }
 }

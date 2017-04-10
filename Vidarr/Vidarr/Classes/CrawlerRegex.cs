@@ -138,7 +138,18 @@ namespace Vidarr.Classes
             string keywords = "";
             //string pattern = "title=\"(.*?)</a>";
             string pattern = "(<meta itemprop=\"|<link itemprop=\"thumbnailUrl\")(.*?)\">";
+            string title = "(<meta itemprop=\"name\" content=\")(.*?)\">";
+            string description = "(<meta itemprop=\"description\" content=\")(.*?)\">";
+            string genre = "(<meta itemprop=\"genre\" content=\")(.*?)\">";
+            string thumbnail = "(<link itemprop=\"thumbnailUrl\" href=\")(.*?)\">";
+
             MatchCollection collection;
+            MatchCollection collectionTitle;
+            MatchCollection collectionDescription;
+            MatchCollection collectionGenre;
+            MatchCollection collectionThumbnail;
+
+
             try
             {
                 collection = Regex.Matches(response, pattern);
@@ -146,9 +157,52 @@ namespace Vidarr.Classes
                 {
                     //spuug uit van je gevonden hebt
                     keywords = m.Value;
+                    string gevondenTitle = "";
+                    string gevondenDescription = "";
+                    string gevondenGenre = "";
+                    string gevondenThumbnail = "";
 
                     //keywords in database!!!!!!!!!
                     Debug.WriteLine("Gevonden keywords: " + keywords);
+
+                    collectionTitle = Regex.Matches(m.Value, title);
+                    foreach (Match m2 in collectionTitle)
+                    {
+                        gevondenTitle = m2.Groups[2].Value;
+                        Debug.WriteLine("Gevonden title: " + gevondenTitle);
+                    }
+                    collectionDescription = Regex.Matches(m.Value, description);
+                    foreach (Match m2 in collectionDescription)
+                    {
+                        gevondenDescription = m2.Groups[2].Value;
+                        Debug.WriteLine("Gevonden description: " + gevondenDescription);
+                    }
+                    collectionGenre = Regex.Matches(m.Value, genre);
+                    foreach (Match m2 in collectionGenre)
+                    {
+                        gevondenGenre = m2.Groups[2].Value;
+                        Debug.WriteLine("Gevonden genre: " + gevondenGenre);
+                    }
+                    collectionThumbnail = Regex.Matches(m.Value, thumbnail);
+                    foreach (Match m2 in collectionThumbnail)
+                    {
+                        gevondenThumbnail = m2.Groups[2].Value;
+                        Debug.WriteLine("Gevonden thumbnailUrl: " + gevondenThumbnail);
+                    }
+                    using (var db = new BloggingContext())
+                    {
+                        var vidTitle = new Videos { Title = gevondenTitle };
+                        var vidDescription= new Videos { Title = gevondenTitle };
+                        var vidGenre = new Videos { Title = gevondenTitle };
+                        var vidThumbnail = new Videos { Title = gevondenTitle };
+
+                        db.Videos.Add(vidTitle);
+                        db.Videos.Add(vidDescription);
+                        db.Videos.Add(vidGenre);
+                        db.Videos.Add(vidThumbnail);
+
+                        db.SaveChanges();
+                    }
                 }
             }
             catch (NullReferenceException e)

@@ -17,6 +17,8 @@ namespace Vidarr.Classes
         List<string> lijstUrls;
         List<string> lijstResponses;
         List<string> lijstResponsesKeywords;
+        List<string> urls;
+
         Object locker;
         bool beginGelukt = false;
 
@@ -27,6 +29,7 @@ namespace Vidarr.Classes
             lijstUrls = new List<string>();
             lijstResponses = new List<string>();
             lijstResponsesKeywords = new List<string>();
+            urls = new List<string>();
             locker = new Object();
 
             Task beginpuntCrawl = new Task(() => 
@@ -88,7 +91,7 @@ namespace Vidarr.Classes
             while (!finished)
             {
                 //voor testen max 50 rondes
-                if (aantalGecrawled < 100)
+                if (aantalGecrawled < 10)
                 {
                     //pak alleen uit lijstResponses als lijstUrls minder dan 16 heeft;
                     if (lijstUrls.Count < 11)
@@ -173,7 +176,7 @@ namespace Vidarr.Classes
                 db.Videos.Add(vidUrl);
                 db.SaveChanges();
 
-                Videos.ItemsSource = db.Videos.ToList();
+                urls.Add(url);
                 
             }
 

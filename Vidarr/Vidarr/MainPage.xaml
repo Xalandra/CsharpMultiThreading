@@ -50,6 +50,7 @@
                     </ListView>
                 </StackPanel>
                 <Button x:Name="zoekButton" Content="Button" HorizontalAlignment="Left" Margin="352,49,0,0" VerticalAlignment="Top" Background="#FF8E00CA" Click="zoekButton_Click"/>
+                <ListBox x:Name="ListBox1" HorizontalAlignment="Left" Height="129" Margin="52,216,-346,0" VerticalAlignment="Top" Width="884" SelectionChanged="ListBox_SelectionChanged"/>
 
                 <!--<Grid.RowDefinitions>
                     <RowDefinition Height="24*"/>
