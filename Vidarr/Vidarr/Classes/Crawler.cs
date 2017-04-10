@@ -167,6 +167,16 @@ namespace Vidarr.Classes
 
             //welke url crawlen
             Debug.WriteLine("url in getResponseBody() = " + url);
+            using (var db = new BloggingContext())
+            {
+                var vidUrl = new Videos { Url = url };
+                db.Videos.Add(vidUrl);
+                db.SaveChanges();
+
+                Videos.ItemsSource = db.Videos.ToList();
+                
+            }
+
 
             try
             {
