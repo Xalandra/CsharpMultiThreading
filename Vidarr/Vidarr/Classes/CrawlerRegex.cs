@@ -148,7 +148,7 @@ namespace Vidarr.Classes
             MatchCollection collectionDescription;
             MatchCollection collectionGenre;
             MatchCollection collectionThumbnail;
-
+            var videos = new Videos();
 
             try
             {
@@ -169,38 +169,40 @@ namespace Vidarr.Classes
                     foreach (Match m2 in collectionTitle)
                     {
                         gevondenTitle = m2.Groups[2].Value;
+                        videos.Title = gevondenTitle;
                         Debug.WriteLine("Gevonden title: " + gevondenTitle);
                     }
                     collectionDescription = Regex.Matches(m.Value, description);
                     foreach (Match m2 in collectionDescription)
                     {
                         gevondenDescription = m2.Groups[2].Value;
+                        videos.Description = gevondenDescription;
                         Debug.WriteLine("Gevonden description: " + gevondenDescription);
                     }
                     collectionGenre = Regex.Matches(m.Value, genre);
                     foreach (Match m2 in collectionGenre)
                     {
                         gevondenGenre = m2.Groups[2].Value;
+                        videos.Genre = gevondenGenre;
                         Debug.WriteLine("Gevonden genre: " + gevondenGenre);
                     }
                     collectionThumbnail = Regex.Matches(m.Value, thumbnail);
                     foreach (Match m2 in collectionThumbnail)
                     {
                         gevondenThumbnail = m2.Groups[2].Value;
+                        videos.Thumbnail = gevondenThumbnail;
                         Debug.WriteLine("Gevonden thumbnailUrl: " + gevondenThumbnail);
                     }
                     using (var db = new BloggingContext())
                     {
-                        var vidTitle = new Videos { Title = gevondenTitle };
-                        var vidDescription= new Videos { Title = gevondenTitle };
-                        var vidGenre = new Videos { Title = gevondenTitle };
-                        var vidThumbnail = new Videos { Title = gevondenTitle };
+                        //var video = new Videos { Title = gevondenTitle, Description = gevondenDescription, Genre = gevondenGenre, Thumbnail = gevondenThumbnail };
 
-                        db.Videos.Add(vidTitle);
-                        db.Videos.Add(vidDescription);
-                        db.Videos.Add(vidGenre);
-                        db.Videos.Add(vidThumbnail);
-
+                        db.Videos.Add(videos);
+                        //Debug.WriteLine("DIT IS EEN TEST " + gevondenTitle + " EN DIT OOK " + videos.Title);
+                        //db.Videos.Add(vidDescription);
+                        //db.Videos.Add(vidGenre);
+                        //db.Videos.Add(vidThumbnail);
+                        
                         db.SaveChanges();
                     }
                 }

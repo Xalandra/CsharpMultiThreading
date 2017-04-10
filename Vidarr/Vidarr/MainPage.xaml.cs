@@ -93,11 +93,11 @@ namespace Vidarr
             using (var db = new BloggingContext())
             {
                 
-                var vidItems = db.Videos.Select(v => v.Url).ToList();
-                foreach (var v in vidItems.Take(4))
+                var vidItems = db.Videos.Select(v => v.Title);
+                foreach (var v in vidItems.Take(100).ToList())
                 {
 
-                    //Debug.WriteLine(v);
+                    Debug.WriteLine(v);
                     //ListBox1.Items.Add(v);
                 }
                 
