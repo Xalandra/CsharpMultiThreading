@@ -15795,14 +15795,14 @@
     "UAP,Version=v10.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Xalandra\\.nuget\\packages\\": {}
+    "C:\\Users\\Rene\\.nuget\\packages\\": {}
   },
   "project": {
     "restore": {
-      "projectUniqueName": "C:\\Stenden\\Jaar 3\\3.3 Threading in C#\\vadarrGithubSourcetree\\Vidarr\\Uwp youtube downloader\\C#\\YoutubeDownloaderUWP\\YoutubeDownloaderUWP.csproj",
+      "projectUniqueName": "D:\\Software\\GitHub\\VidaRRComplete\\Vidarr\\Uwp youtube downloader\\C#\\YoutubeDownloaderUWP\\YoutubeDownloaderUWP.csproj",
       "projectName": "YoutubeDownloaderUWP",
-      "projectPath": "C:\\Stenden\\Jaar 3\\3.3 Threading in C#\\vadarrGithubSourcetree\\Vidarr\\Uwp youtube downloader\\C#\\YoutubeDownloaderUWP\\YoutubeDownloaderUWP.csproj",
-      "projectJsonPath": "C:\\Stenden\\Jaar 3\\3.3 Threading in C#\\vadarrGithubSourcetree\\Vidarr\\Uwp youtube downloader\\C#\\YoutubeDownloaderUWP\\project.json",
+      "projectPath": "D:\\Software\\GitHub\\VidaRRComplete\\Vidarr\\Uwp youtube downloader\\C#\\YoutubeDownloaderUWP\\YoutubeDownloaderUWP.csproj",
+      "projectJsonPath": "D:\\Software\\GitHub\\VidaRRComplete\\Vidarr\\Uwp youtube downloader\\C#\\YoutubeDownloaderUWP\\project.json",
       "projectStyle": "ProjectJson"
     },
     "dependencies": {
