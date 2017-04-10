@@ -32,13 +32,17 @@
         </SplitView.Pane>
         <SplitView.Content>
             <Grid Background="Black">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="23*"/>
+                    <RowDefinition Height="49*"/>
+                </Grid.RowDefinitions>
                 <TextBlock Text="SplitView Basic" FontSize="54" Foreground="White"
-                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock x:Name="watVanWebsite" Text="Nog niks gedaan." FontSize="12" Foreground="White" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="620" Width="290"/>
+                           HorizontalAlignment="Center" VerticalAlignment="Center" Margin="759,159,758,504" Grid.Row="1"/>
+                <TextBlock x:Name="watVanWebsite" Text="Nog niks gedaan." FontSize="12" Foreground="White" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="620" Width="290" Grid.RowSpan="2"/>
                 <TextBox x:Name="inputZoekterm" HorizontalAlignment="Left" Margin="195,32,0,0" TextWrapping="Wrap" Text="Vul zoekterm in.." VerticalAlignment="Top" Width="110"/>
-                <Button Content="Button" HorizontalAlignment="Left" Margin="422,345,0,0" VerticalAlignment="Top" Background="Red" Click="Button_Click" Width="135"/>
+                <Button Content="Button" HorizontalAlignment="Left" Margin="422,0,0,0" VerticalAlignment="Top" Background="Red" Click="Button_Click" Width="135" Grid.Row="1"/>
 
-                <StackPanel Margin="533,0,0,283">
+                <StackPanel Margin="533,0,0,283" Grid.RowSpan="2">
                     <TextBox Name="NewBlogUrl"></TextBox>
                     <Button Click="Add_Click" Background="#FFFFF811">Add</Button>
                     <ListView Name="Videos" Foreground="White">
@@ -50,7 +54,7 @@
                     </ListView>
                 </StackPanel>
                 <Button x:Name="zoekButton" Content="Button" HorizontalAlignment="Left" Margin="352,49,0,0" VerticalAlignment="Top" Background="#FF8E00CA" Click="zoekButton_Click"/>
-                <Button Content="Database connectie" HorizontalAlignment="Left" Margin="696,215,0,0" VerticalAlignment="Top" Height="72" Width="176" Background="#FF0734F6" Click="Button_Click_1"/>
+                <Button Content="Database connectie (force encoding werkt niet) :C" HorizontalAlignment="Left" Margin="696,215,0,0" VerticalAlignment="Top" Height="62" Width="392" Background="#FF0734F6" Click="Button_Click_1Async"/>
 
                 <!--<Grid.RowDefinitions>
                     <RowDefinition Height="24*"/>

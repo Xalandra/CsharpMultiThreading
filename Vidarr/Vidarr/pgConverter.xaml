@@ -1,0 +1,60 @@
+﻿<Page
+    x:Class="Vidarr.pgConverter"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Vidarr"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Button Content="Go To Downloader" HorizontalAlignment="Left" Margin="1759,1038,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button Content="Select File.." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="81,75,0,0" Click="Button_Click_1Async"/>
+        <Button Content="Select File.." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="81,136,0,0" Click="Button_Click_2Async"/>
+        <Button Content="Select File.." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="81,194,0,0" Click="Button_Click_3Async"/>
+        <Button Content="Select File.." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="81,259,0,0" Click="Button_Click_4Async"/>
+        <TextBlock x:Name="FileSelectOne" HorizontalAlignment="Left" Margin="207,81,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+        <TextBlock x:Name="FileSelectTwo" HorizontalAlignment="Left" Margin="207,142,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+        <TextBlock x:Name="FileSelectThree" HorizontalAlignment="Left" Margin="207,200,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+        <TextBlock x:Name="FileSelectFour" HorizontalAlignment="Left" Margin="207,265,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+        <ComboBox x:Name="ComboBox1" HorizontalAlignment="Left" Margin="282,306,0,0" VerticalAlignment="Top" Width="183" Header="Select audio extension" FontStretch="Condensed">
+            <TextBlock
+                            Text=".MP3"
+                            FontWeight="Black"
+                            FontFamily="Calibri"
+                            FontSize="20"
+                            TextWrapping="Wrap"
+                            />
+            <TextBlock
+                            Text=".MP4"
+                            FontWeight="Black"
+                            FontFamily="Calibri"
+                            FontSize="20"
+                            TextWrapping="Wrap"
+                            />
+            <TextBlock
+                            Text=".MOV"
+                            FontWeight="Black"
+                            FontFamily="Calibri"
+                            FontSize="20"
+                            TextWrapping="Wrap"
+                            />
+            <TextBlock
+                            Text=".FLV"
+                            FontWeight="Black"
+                            FontFamily="Calibri"
+                            FontSize="20"
+                            TextWrapping="Wrap"
+                            />
+            <TextBlock
+                            Text=".AVI"
+                            FontWeight="Black"
+                            FontFamily="Calibri"
+                            FontSize="20"
+                            TextWrapping="Wrap"
+                            />
+        </ComboBox>
+        <Button Content="Convert" HorizontalAlignment="Left" Margin="318,435,0,0" VerticalAlignment="Top" FontSize="28"/>
+        <ListView HorizontalAlignment="Left" Height="960" Margin="879,39,0,0" VerticalAlignment="Top" Width="960"/>
+    </Grid>
+</Page>
