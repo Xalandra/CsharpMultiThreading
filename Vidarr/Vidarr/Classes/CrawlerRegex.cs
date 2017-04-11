@@ -155,14 +155,15 @@ namespace Vidarr.Classes
             try
             {
                 collection = Regex.Matches(response, pattern);
+                string gevondenTitle = "";
+                string gevondenDescription = "";
+                string gevondenGenre = "";
+                string gevondenThumbnail = "";
                 foreach (Match m in collection)
                 {
                     //spuug uit van je gevonden hebt
                     keywords = m.Value;
-                    string gevondenTitle = "";
-                    string gevondenDescription = "";
-                    string gevondenGenre = "";
-                    string gevondenThumbnail = "";
+                    
 
                     //keywords in database!!!!!!!!!
                     Debug.WriteLine("Gevonden keywords: " + keywords);
@@ -199,31 +200,7 @@ namespace Vidarr.Classes
                     //cmd.CommandText = "INSERT INTO video(Url,Title,Description,Genre,Thumbnail) VALUES('https://www.youtube.com/watch?v=fPJ2RAmDQ3Y','DMX - We In Here (Dirty Version)','DMX official music video for 'We In Here'.','Rap','https://i.ytimg.com/vi/1GGw2nqIMfE/hqdefault.jpg')";
 
 
-                    MySqlConnection conn;
-                    string myConnectionString;
-
-                    myConnectionString = "Server=127.0.0.1;Database=vidarr;Uid=root;Pwd='';SslMode=None;charset=utf8";
-
-                    try
-                    {
-                        conn = new MySqlConnection(myConnectionString);
-                        MySqlCommand cmd = new MySqlCommand();
-                        MySqlDataReader reader;
-
-                        //cmd.CommandText = "INSERT INTO video(Url,Title,Description,Genre,Thumbnail) VALUES('https://www.youtube.com/watch?v=fPJ2RAmDQ3Y" + "','" + gevondenTitle + "','" + gevondenDescription + "','" + gevondenGenre + "','" + gevondenThumbnail + "'";
-                        conn.Open();
-                        cmd.CommandType = CommandType.Text;
-                        cmd.Connection = conn;
-                        cmd.ExecuteNonQuery();
-                        //reader = cmd.ExecuteReader();
-                    }
-                    catch (MySqlException ex)
-                    {
-                        //MessageBox.Show(ex.Message);
-
-                        var dialog = new MessageDialog(ex.Message);
-                        //dialog.ShowAsync();
-                    }
+                    
 
 
 
@@ -239,6 +216,31 @@ namespace Vidarr.Classes
 
                     //db.SaveChanges();
                     //}
+                }
+                MySqlConnection conn;
+                string myConnectionString;
+
+                myConnectionString = "Server=127.0.0.1;Database=vidarr;Uid=root;Pwd='';SslMode=None;charset=utf8";
+
+                try
+                {
+                    conn = new MySqlConnection(myConnectionString);
+                    MySqlCommand cmd = new MySqlCommand();
+                    MySqlDataReader reader;
+
+                    cmd.CommandText = "INSERT INTO video(Url,Title,Description,Genre,Thumbnail) VALUES('https://www.youtube.com/watch?v=fPJ2RAmDQ3Y" + "','" + gevondenTitle + "','" + gevondenDescription + "','" + gevondenGenre + "','" + gevondenThumbnail + "')";
+                    conn.Open();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                    //reader = cmd.ExecuteReader();
+                }
+                catch (MySqlException ex)
+                {
+                    //MessageBox.Show(ex.Message);
+                    //var dialog = new MessageDialog(ex.Message);
+                    //dialog.ShowAsync();
+
                 }
             }
             catch (NullReferenceException e)
