@@ -56,5 +56,6 @@
         </ComboBox>
         <Button Content="Convert" HorizontalAlignment="Left" Margin="318,435,0,0" VerticalAlignment="Top" FontSize="28"/>
         <ListView HorizontalAlignment="Left" Height="960" Margin="879,39,0,0" VerticalAlignment="Top" Width="960"/>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="81,332,0,0" VerticalAlignment="Top" Width="93" Click="button_Click_1"/>
     </Grid>
 </Page>
