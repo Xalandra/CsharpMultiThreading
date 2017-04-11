@@ -171,7 +171,7 @@ namespace Vidarr
                 
 
                 //cmd.CommandText = "SELECT * FROM video";
-                cmd.CommandText = "INSERT INTO video(Url,Title,Description,Genre,Thumbnail) VALUES('url','titlehere','Cooldescription','Rap','imagehere')";
+                cmd.CommandText = "INSERT INTO video(Url,Title,Description,Genre,Thumbnail) VALUES('https://www.youtube.com/watch?v=fPJ2RAmDQ3Y','DMX - We In Here (Dirty Version)','DMX official music video for 'We In Here'.','Rap','https://i.ytimg.com/vi/1GGw2nqIMfE/hqdefault.jpg')";
                 conn.Open();
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = conn;
