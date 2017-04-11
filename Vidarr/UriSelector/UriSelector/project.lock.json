@@ -15610,14 +15610,14 @@
     "UAP,Version=v10.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Xalandra\\.nuget\\packages\\": {}
+    "C:\\Users\\Rene\\.nuget\\packages\\": {}
   },
   "project": {
     "restore": {
-      "projectUniqueName": "C:\\Stenden\\Jaar 3\\3.3 Threading in C#\\vadarrGithubSourcetree\\Vidarr\\UriSelector\\UriSelector\\UriSelector.csproj",
+      "projectUniqueName": "D:\\Software\\GitHub\\VidaRRComplete\\Vidarr\\UriSelector\\UriSelector\\UriSelector.csproj",
       "projectName": "UriSelector",
-      "projectPath": "C:\\Stenden\\Jaar 3\\3.3 Threading in C#\\vadarrGithubSourcetree\\Vidarr\\UriSelector\\UriSelector\\UriSelector.csproj",
-      "projectJsonPath": "C:\\Stenden\\Jaar 3\\3.3 Threading in C#\\vadarrGithubSourcetree\\Vidarr\\UriSelector\\UriSelector\\project.json",
+      "projectPath": "D:\\Software\\GitHub\\VidaRRComplete\\Vidarr\\UriSelector\\UriSelector\\UriSelector.csproj",
+      "projectJsonPath": "D:\\Software\\GitHub\\VidaRRComplete\\Vidarr\\UriSelector\\UriSelector\\project.json",
       "projectStyle": "ProjectJson"
     },
     "dependencies": {
