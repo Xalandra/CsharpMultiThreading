@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using System.Threading.Tasks;
 using Vidarr.Classes;
 using Windows.Foundation;
@@ -120,6 +121,45 @@ namespace Vidarr
 
         private async void dbButton_ClickAsync(object sender, RoutedEventArgs e)
         {
+            //MySqlConnection conn;
+            //string myConnectionString;
+
+            //myConnectionString = "Server=127.0.0.1;Database=vidarr;Uid=root;Pwd='';SslMode=None;charset=utf8";
+
+            //try
+            //{
+            //    conn = new MySqlConnection(myConnectionString);
+            //    MySqlCommand cmd = new MySqlCommand();
+            //    //MySqlDataReader reader;
+
+
+
+            //    //cmd.CommandText = "SELECT * FROM video";
+            //    cmd.CommandText = "INSERT INTO video(Url,Title,Description,Genre,Thumbnail) VALUES('https://www.youtube.com/watch?v=fPJ2RAmDQ3Y','title','descr','genre','thumb')";
+            //    conn.Open();
+            //    cmd.CommandType = CommandType.Text;
+            //    cmd.Connection = conn;
+            //    cmd.ExecuteNonQuery();
+            //    conn.Close();
+            //    //reader = cmd.ExecuteReader();
+
+
+            //}
+            //catch (MySqlException ex)
+            //{
+            //    //MessageBox.Show(ex.Message);
+
+            //    var dialog = new MessageDialog(ex.Message);
+            //    await dialog.ShowAsync();
+            //}
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            ListBox1.Items.Clear();
+            string input = inputZoekterm.Text;
+            List<string> output = new List<string>();
+
             MySqlConnection conn;
             string myConnectionString;
 
@@ -127,29 +167,47 @@ namespace Vidarr
 
             try
             {
+
+                System.Text.EncodingProvider ppp;
+                ppp = System.Text.CodePagesEncodingProvider.Instance;
+                Encoding.RegisterProvider(ppp);
+
                 conn = new MySqlConnection(myConnectionString);
-                MySqlCommand cmd = new MySqlCommand();
-                MySqlDataReader reader;
+                MySqlCommand cmd;
 
-
-
-                //cmd.CommandText = "SELECT * FROM video";
-                cmd.CommandText = "INSERT INTO video(Url,Title,Description,Genre,Thumbnail) VALUES('https://www.youtube.com/watch?v=fPJ2RAmDQ3Y','title','descr','genre','thumb')";
                 conn.Open();
-                cmd.CommandType = CommandType.Text;
-                cmd.Connection = conn;
-                cmd.ExecuteNonQuery();
-                //reader = cmd.ExecuteReader();
+                string query = "SELECT title FROM video WHERE title LIKE '%" + input + "%' ORDER BY id DESC LIMIT 0,4";
 
+                string title;
 
+                cmd = new MySqlCommand(query, conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    title = (string)reader["title"];
+                    ListBox1.Items.Add(title);
+                }
+
+                reader.Close();
             }
             catch (MySqlException ex)
             {
-                //MessageBox.Show(ex.Message);
-
-                var dialog = new MessageDialog(ex.Message);
-                await dialog.ShowAsync();
+                Debug.WriteLine(ex.Message);
             }
+            //MySqlCommand command = new MySqlCommand(selectCmd);
+            //reader = command.ExecuteReader();
+
+
+            //while (reader.Read())
+            //{
+            //string title = (string)reader["title"];
+            //title = command.ExecuteScalar().ToString();
+            //Debug.WriteLine(title);
+            //ListBox1.Items.Add(title);
+            //}
+
+
         }
     }
 }

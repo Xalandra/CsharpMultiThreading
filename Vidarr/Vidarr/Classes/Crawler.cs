@@ -28,7 +28,6 @@ namespace Vidarr.Classes
 
         public Crawler()
         { 
-
             lijstUrls = new List<string>();
             lijstResponses = new List<string>();
             lijstResponsesKeywords = new List<string>();
@@ -94,7 +93,7 @@ namespace Vidarr.Classes
             while (!finished)
             {
                 //voor testen max 50 rondes
-                if (aantalGecrawled < 100)
+                if (aantalGecrawled < 10)
                 {
                     //pak alleen uit lijstResponses als lijstUrls minder dan 16 heeft;
                     if (lijstUrls.Count < 11)

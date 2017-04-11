@@ -52,6 +52,7 @@
                 <Button x:Name="zoekButton" Content="Button" HorizontalAlignment="Left" Margin="352,49,0,0" VerticalAlignment="Top" Background="#FF8E00CA" Click="zoekButton_Click"/>
                 <ListBox x:Name="ListBox1" HorizontalAlignment="Left" Height="129" Margin="52,216,-346,0" VerticalAlignment="Top" Width="884" SelectionChanged="ListBox_SelectionChanged"/>
                 <Button x:Name="dbButton" Content="Button" HorizontalAlignment="Left" Margin="245,130,0,0" VerticalAlignment="Top" Background="#FFF9F9FF" Click="dbButton_ClickAsync"/>
+                <Button Content="Button" HorizontalAlignment="Left" Margin="155,119,0,0" VerticalAlignment="Top" Background="#FF4EA441" Click="Button_Click_1"/>
 
                 <!--<Grid.RowDefinitions>
                     <RowDefinition Height="24*"/>
