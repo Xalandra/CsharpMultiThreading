@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
+using Vidarr.Classes;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Popups;
@@ -29,6 +30,8 @@ namespace Vidarr
     /// </summary>
     public sealed partial class pgDownload : Page
     {
+        ObservableCollection<DownloadViewModel> downloadList = new ObservableCollection<DownloadViewModel>();
+        
         public pgDownload()
         {
             this.InitializeComponent();
@@ -54,11 +57,11 @@ namespace Vidarr
             lstDownload.Width = gridRoot.ActualWidth;
         }
 
-        ObservableCollection<DownloadViewModel> downloadList = new ObservableCollection<DownloadViewModel>();
+        
         private async void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
 
-            string link = SearchBox.Text;
+            /*string link = SearchBox.Text;
             string[] id = link.Split('=');
 
             try
@@ -74,19 +77,21 @@ namespace Vidarr
             {
                 var dialog = new MessageDialog(ex.Message);
                 await dialog.ShowAsync();
-            }
+            }*/
         }
 
         private async void querySubmittedZoek(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             Debug.WriteLine("querysubmittedzoek; " + args.QueryText);
             string input = args.QueryText;
+            List<ResultZoekterm> resultatenLijst = new List<ResultZoekterm>();
 
             //zoek in database
             bool welInDb = false;
             Task<bool> zoekInDb = Task<bool>.Factory.StartNew(() => 
             {
                 List<string> output = new List<string>();
+                
 
                 MySqlConnection conn;
                 string myConnectionString;
@@ -95,8 +100,8 @@ namespace Vidarr
 
                 try
                 {
-                    System.Text.EncodingProvider ppp;
-                    ppp = System.Text.CodePagesEncodingProvider.Instance;
+                    EncodingProvider ppp;
+                    ppp = CodePagesEncodingProvider.Instance;
                     Encoding.RegisterProvider(ppp);
 
                     conn = new MySqlConnection(myConnectionString);
@@ -105,37 +110,39 @@ namespace Vidarr
                     conn.Open();
                     string query = "SELECT * FROM video WHERE title LIKE '%" + input + "%' ORDER BY id DESC LIMIT 0,4";
 
-                    string url;
-                    string title;
-                    string description;
-                    string genre;
-                    string thumb;
+                    string urlx;
+                    string titlex;
+                    string descriptionx;
+                    string genrex;
+                    string thumbx;
 
                     cmd = new MySqlCommand(query, conn);
                     MySqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())
                     {
-                        url = (string)reader["url"];
-                        title = (string)reader["title"];
-                        description = (string)reader["description"];
-                        genre = (string)reader["genre"];
-                        thumb = (string)reader["thumbnail"];
+                        urlx = (string)reader["url"];
+                        titlex = (string)reader["title"];
+                        descriptionx = (string)reader["description"];
+                        genrex = (string)reader["genre"];
+                        thumbx = (string)reader["thumbnail"];
 
-                        Debug.WriteLine(url + "\n" + title + "\n" + description + "\n" + genre + "\n" + thumb + "\n");
+                        Debug.WriteLine(urlx + "\n" + titlex + "\n" + descriptionx + "\n" + genrex + "\n" + thumbx + "\n");
+                        resultatenLijst.Add(new ResultZoekterm { url = urlx, titel = titlex, description = descriptionx, genre = genrex, thumb = thumbx });
+                        
                     }
 
                     reader.Close();
 
-
+                    
                 }
                 catch (MySqlException ex)
                 {
                     Debug.WriteLine(ex.Message);
                 }
 
-                
-                
+
+
                 /*MySqlConnection conn;
                 string myConnectionString;
                 myConnectionString = "Server=127.0.0.1;Database=vidarr;Uid=root;Pwd='';SslMode=None;charset=utf8";
@@ -160,8 +167,12 @@ namespace Vidarr
                 }*/
 
 
+                
+
                 return true;
             });
+            zoekInDb.Wait();
+            zoektermResults.ItemsSource = resultatenLijst;
             welInDb = await zoekInDb;
             if (welInDb)
             {
@@ -178,6 +189,17 @@ namespace Vidarr
         private void SearchBox_TextChangeds(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
 
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            /*      IEnumerable<VideoInfo> videosInfors = DownloadUrlResolver.GetDownloadUrls(link);
+
+                VideoInfo video = videosInfors.First(infor => infor.VideoType == VideoType.Mp4);
+
+                downloadList.Add(new DownloadViewModel(video.DownloadUrl, video.Title, "https://i.ytimg.com/vi/" + id[1] + "/default.jpg", video.VideoExtension));
+                lstDownload.ItemsSource = downloadList;
+                textBox.Text = id[1];*/
         }
     }
 }
