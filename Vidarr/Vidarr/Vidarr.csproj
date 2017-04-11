@@ -102,6 +102,7 @@
     <Compile Include="Classes\Download.cs" />
     <Compile Include="Classes\MaakHttpClientAan.cs" />
     <Compile Include="Classes\Model.cs" />
+    <Compile Include="Classes\ResultZoekterm.cs" />
     <Compile Include="Classes\ZoekZoekterm.cs" />
     <Compile Include="Convert.xaml.cs">
       <DependentUpon>Convert.xaml</DependentUpon>

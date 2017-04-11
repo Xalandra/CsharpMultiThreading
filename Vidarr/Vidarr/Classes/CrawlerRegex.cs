@@ -170,7 +170,7 @@ namespace Vidarr.Classes
 
 
 
-                    Debug.WriteLine("Gevonden keywords: " + keywords);
+                    //Debug.WriteLine("Gevonden keywords: " + keywords);
 
                     collectionUrl = Regex.Matches(m.Value, videoId);
                     foreach (Match m2 in collectionUrl)
