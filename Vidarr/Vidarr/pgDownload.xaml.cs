@@ -36,7 +36,7 @@ namespace Vidarr
             this.Frame.Navigate(typeof(pgConverter));
         }
 
-        private async void zoek(object sender, KeyRoutedEventArgs e)
+        private void zoek(object sender, KeyRoutedEventArgs e)
         {
             //check of enter is gebruik
             if (e.Key == Windows.System.VirtualKey.Enter)
