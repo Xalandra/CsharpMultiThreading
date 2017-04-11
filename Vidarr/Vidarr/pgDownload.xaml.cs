@@ -54,11 +54,6 @@ namespace Vidarr
             lstDownload.Width = gridRoot.ActualWidth;
         }
 
-        private void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-        {
-
-        }
-
         ObservableCollection<DownloadViewModel> downloadList = new ObservableCollection<DownloadViewModel>();
         private async void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
