@@ -8,9 +8,9 @@ using Windows.Media.MediaProperties;
 using Windows.Media.Transcoding;
 using Windows.Storage;
 
-namespace Vidarr.Classes
+namespace Vidarr
 {
-    public class Convert
+    public partial class Convert
     {
         void TranscodeProgress(IAsyncActionWithProgress<double> asyncInfo, double percent)
         {
