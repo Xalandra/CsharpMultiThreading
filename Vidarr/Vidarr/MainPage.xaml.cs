@@ -1,13 +1,16 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Vidarr.Classes;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -31,7 +34,7 @@ namespace Vidarr
         public MainPage()
         {
             this.InitializeComponent();
-            
+
             crawler = new Crawler();
         }
 
@@ -113,6 +116,40 @@ namespace Vidarr
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             
+        }
+
+        private async void dbButton_ClickAsync(object sender, RoutedEventArgs e)
+        {
+            MySqlConnection conn;
+            string myConnectionString;
+
+            myConnectionString = "Server=127.0.0.1;Database=vidarr;Uid=root;Pwd='';SslMode=None;charset=utf8";
+
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                MySqlCommand cmd = new MySqlCommand();
+                MySqlDataReader reader;
+
+
+
+                //cmd.CommandText = "SELECT * FROM video";
+                cmd.CommandText = "INSERT INTO video(Url,Title,Description,Genre,Thumbnail) VALUES('https://www.youtube.com/watch?v=fPJ2RAmDQ3Y','title','descr','genre','thumb')";
+                conn.Open();
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+                //reader = cmd.ExecuteReader();
+
+
+            }
+            catch (MySqlException ex)
+            {
+                //MessageBox.Show(ex.Message);
+
+                var dialog = new MessageDialog(ex.Message);
+                await dialog.ShowAsync();
+            }
         }
     }
 }

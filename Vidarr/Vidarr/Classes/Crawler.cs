@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.System.Threading;
+using Windows.UI.Popups;
 
 namespace Vidarr.Classes
 {
@@ -25,7 +27,8 @@ namespace Vidarr.Classes
         int aantalGecrawled;
 
         public Crawler()
-        {
+        { 
+
             lijstUrls = new List<string>();
             lijstResponses = new List<string>();
             lijstResponsesKeywords = new List<string>();
@@ -91,7 +94,7 @@ namespace Vidarr.Classes
             while (!finished)
             {
                 //voor testen max 50 rondes
-                if (aantalGecrawled < 20)
+                if (aantalGecrawled < 100)
                 {
                     //pak alleen uit lijstResponses als lijstUrls minder dan 16 heeft;
                     if (lijstUrls.Count < 11)

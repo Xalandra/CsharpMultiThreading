@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
+using Windows.UI.Popups;
 
 namespace Vidarr.Classes
 {
@@ -169,42 +171,74 @@ namespace Vidarr.Classes
                     foreach (Match m2 in collectionTitle)
                     {
                         gevondenTitle = m2.Groups[2].Value;
-                        videos.Title = gevondenTitle;
+                        //videos.Title = gevondenTitle;
                         Debug.WriteLine("Gevonden title: " + gevondenTitle);
                     }
                     collectionDescription = Regex.Matches(m.Value, description);
                     foreach (Match m2 in collectionDescription)
                     {
                         gevondenDescription = m2.Groups[2].Value;
-                        videos.Description = gevondenDescription;
+                        //videos.Description = gevondenDescription;
                         Debug.WriteLine("Gevonden description: " + gevondenDescription);
                     }
                     collectionGenre = Regex.Matches(m.Value, genre);
                     foreach (Match m2 in collectionGenre)
                     {
                         gevondenGenre = m2.Groups[2].Value;
-                        videos.Genre = gevondenGenre;
+                        //videos.Genre = gevondenGenre;
                         Debug.WriteLine("Gevonden genre: " + gevondenGenre);
                     }
                     collectionThumbnail = Regex.Matches(m.Value, thumbnail);
                     foreach (Match m2 in collectionThumbnail)
                     {
                         gevondenThumbnail = m2.Groups[2].Value;
-                        videos.Thumbnail = gevondenThumbnail;
+                        //videos.Thumbnail = gevondenThumbnail;
                         Debug.WriteLine("Gevonden thumbnailUrl: " + gevondenThumbnail);
                     }
-                    using (var db = new BloggingContext())
-                    {
-                        //var video = new Videos { Title = gevondenTitle, Description = gevondenDescription, Genre = gevondenGenre, Thumbnail = gevondenThumbnail };
 
-                        db.Videos.Add(videos);
-                        //Debug.WriteLine("DIT IS EEN TEST " + gevondenTitle + " EN DIT OOK " + videos.Title);
-                        //db.Videos.Add(vidDescription);
-                        //db.Videos.Add(vidGenre);
-                        //db.Videos.Add(vidThumbnail);
-                        
-                        db.SaveChanges();
+                    //cmd.CommandText = "INSERT INTO video(Url,Title,Description,Genre,Thumbnail) VALUES('https://www.youtube.com/watch?v=fPJ2RAmDQ3Y','DMX - We In Here (Dirty Version)','DMX official music video for 'We In Here'.','Rap','https://i.ytimg.com/vi/1GGw2nqIMfE/hqdefault.jpg')";
+
+
+                    MySqlConnection conn;
+                    string myConnectionString;
+
+                    myConnectionString = "Server=127.0.0.1;Database=vidarr;Uid=root;Pwd='';SslMode=None;charset=utf8";
+
+                    try
+                    {
+                        conn = new MySqlConnection(myConnectionString);
+                        MySqlCommand cmd = new MySqlCommand();
+                        MySqlDataReader reader;
+
+                        //cmd.CommandText = "INSERT INTO video(Url,Title,Description,Genre,Thumbnail) VALUES('https://www.youtube.com/watch?v=fPJ2RAmDQ3Y" + "','" + gevondenTitle + "','" + gevondenDescription + "','" + gevondenGenre + "','" + gevondenThumbnail + "'";
+                        conn.Open();
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;
+                        cmd.ExecuteNonQuery();
+                        //reader = cmd.ExecuteReader();
                     }
+                    catch (MySqlException ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+
+                        var dialog = new MessageDialog(ex.Message);
+                        //dialog.ShowAsync();
+                    }
+
+
+
+                    //using (var db = new BloggingContext())
+                    //{
+                    //var video = new Videos { Title = gevondenTitle, Description = gevondenDescription, Genre = gevondenGenre, Thumbnail = gevondenThumbnail };
+
+                    //db.Videos.Add(videos);
+                    //Debug.WriteLine("DIT IS EEN TEST " + gevondenTitle + " EN DIT OOK " + videos.Title);
+                    //db.Videos.Add(vidDescription);
+                    //db.Videos.Add(vidGenre);
+                    //db.Videos.Add(vidThumbnail);
+
+                    //db.SaveChanges();
+                    //}
                 }
             }
             catch (NullReferenceException e)
