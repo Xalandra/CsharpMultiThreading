@@ -101,5 +101,38 @@ namespace Vidarr
                 //
             }
         }
+
+        private async void button3_Click(object sender, RoutedEventArgs e)
+        {
+            //Maak een nieuwe FileOpenPicker aan
+            FileOpenPicker openPicker = new FileOpenPicker();
+
+            //Kies welke weergave het moet hebben
+            openPicker.ViewMode = PickerViewMode.Thumbnail;
+
+            //STandaard openings plek
+            openPicker.SuggestedStartLocation = PickerLocationId.MusicLibrary;
+
+            //Bestands extensies die toegelaten worden
+            openPicker.FileTypeFilter.Add(".mp3");
+            openPicker.FileTypeFilter.Add(".mp4");
+            openPicker.FileTypeFilter.Add(".wma");
+            openPicker.FileTypeFilter.Add(".mov");
+            openPicker.FileTypeFilter.Add(".flv");
+            openPicker.FileTypeFilter.Add(".avi");
+
+            //Hier geven we de type selectie weer, single of multiple
+            StorageFile file = await openPicker.PickSingleFileAsync();
+            //MULTIPLE SELECTIE::: StorageFile file = await openPicker.PickMultipleFilesAsync();
+
+            if (file != null)
+            {
+                textBlock2.Text = "Picked audio: " + file.Name;
+            }
+            else
+            {
+                //
+            }
+        }
     }
 }
