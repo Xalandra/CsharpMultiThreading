@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -16,6 +18,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using YoutubeExtractor;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -36,13 +39,46 @@ namespace Vidarr
             this.Frame.Navigate(typeof(pgConverter));
         }
 
-        private async void zoek(object sender, KeyRoutedEventArgs e)
+        private void zoek(object sender, KeyRoutedEventArgs e)
         {
             //check of enter is gebruik
             if (e.Key == Windows.System.VirtualKey.Enter)
             { //do something here 
                 Debug.WriteLine("Op enter gedrukt, gebruik vergrootglasknop");
                 
+            }
+        }
+
+        private void lstDownload_LayoutUpdated(object sender, object e)
+        {
+            lstDownload.Width = gridRoot.ActualWidth;
+        }
+
+        private void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+
+        }
+
+        ObservableCollection<DownloadViewModel> downloadList = new ObservableCollection<DownloadViewModel>();
+        private async void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+
+            string link = SearchBox.Text;
+            string[] id = link.Split('=');
+
+            try
+            {
+                IEnumerable<VideoInfo> videosInfors = DownloadUrlResolver.GetDownloadUrls(link);
+
+                VideoInfo video = videosInfors.First(infor => infor.VideoType == VideoType.Mp4);
+
+                downloadList.Add(new DownloadViewModel(video.DownloadUrl, video.Title, "https://i.ytimg.com/vi/" + id[1] + "/default.jpg", video.VideoExtension));
+                lstDownload.ItemsSource = downloadList;
+            }
+            catch (Exception ex)
+            {
+                var dialog = new MessageDialog(ex.Message);
+                await dialog.ShowAsync();
             }
         }
 
@@ -142,6 +178,11 @@ namespace Vidarr
                 //ga zoeken op zoekterm
                 Debug.WriteLine("Moet gaan zoeken op zoekterm");
             }
+        }
+
+        private void SearchBox_TextChangeds(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+
         }
     }
 }
