@@ -140,12 +140,15 @@ namespace Vidarr.Classes
             string keywords = "";
             //string pattern = "title=\"(.*?)</a>";
             string pattern = "(<meta itemprop=\"|<link itemprop=\"thumbnailUrl\")(.*?)\">";
+
+            string videoId = "(<meta itemprop=\"videoId\" content=\")(.*?)\">";
             string title = "(<meta itemprop=\"name\" content=\")(.*?)\">";
             string description = "(<meta itemprop=\"description\" content=\")(.*?)\">";
             string genre = "(<meta itemprop=\"genre\" content=\")(.*?)\">";
             string thumbnail = "(<link itemprop=\"thumbnailUrl\" href=\")(.*?)\">";
 
             MatchCollection collection;
+            MatchCollection collectionUrl;
             MatchCollection collectionTitle;
             MatchCollection collectionDescription;
             MatchCollection collectionGenre;
@@ -155,6 +158,7 @@ namespace Vidarr.Classes
             try
             {
                 collection = Regex.Matches(response, pattern);
+                string gevondenUrl = "https://www.youtube.com/watch?v=";
                 string gevondenTitle = "";
                 string gevondenDescription = "";
                 string gevondenGenre = "";
@@ -168,6 +172,13 @@ namespace Vidarr.Classes
 
                     Debug.WriteLine("Gevonden keywords: " + keywords);
 
+                    collectionUrl = Regex.Matches(m.Value, videoId);
+                    foreach (Match m2 in collectionUrl)
+                    {
+                        gevondenUrl += m2.Groups[2].Value;
+                        //videos.Title = gevondenTitle;
+                        Debug.WriteLine("Gevonden url: " + gevondenUrl);
+                    }
                     collectionTitle = Regex.Matches(m.Value, title);
                     foreach (Match m2 in collectionTitle)
                     {
@@ -211,7 +222,7 @@ namespace Vidarr.Classes
                     MySqlCommand cmd = new MySqlCommand();
                     MySqlDataReader reader;
 
-                    cmd.CommandText = "INSERT INTO video(Url,Title,Description,Genre,Thumbnail) VALUES('https://www.youtube.com/watch?v=fPJ2RAmDQ3Y" + "','" + gevondenTitle + "','" + gevondenDescription + "','" + gevondenGenre + "','" + gevondenThumbnail + "')";
+                    cmd.CommandText = "INSERT INTO video(Url,Title,Description,Genre,Thumbnail) VALUES('"+ gevondenUrl + "','" + gevondenTitle + "','" + gevondenDescription + "','" + gevondenGenre + "','" + gevondenThumbnail + "')";
                     conn.Open();
                     cmd.CommandType = CommandType.Text;
                     cmd.Connection = conn;
