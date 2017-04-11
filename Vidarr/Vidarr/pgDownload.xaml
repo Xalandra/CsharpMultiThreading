@@ -11,7 +11,9 @@
         <AutoSuggestBox x:Name="SearchBox"
                             PlaceholderText="Search...."
                             Margin="42,39,1177,0"
-                            QueryIcon="Find"
+                            QueryIcon="Find" 
+                            KeyUp="zoek" QuerySubmitted="querySubmittedZoek"
+                            
                             />
 
         <Button Content="Download in .MP3" FontSize="32" HorizontalAlignment="Left" Margin="42,858,0,0" VerticalAlignment="Top" Height="157" Width="318"/>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.System.Threading;
+using Windows.UI.Popups;
 
 namespace Vidarr.Classes
 {
@@ -38,9 +40,42 @@ namespace Vidarr.Classes
 
         //start crawlen is een task
         public async void startCrawlen() {
+            //leeg db
+            maakDatabaseLeeg();
+
+            //haal eerste body op
             beginGelukt = await crawlBeginpunt();
 
+            //ga verder met 1e body
             gaMaarCrawlen();
+        }
+
+        //eerst database leegmaken
+        public void maakDatabaseLeeg()
+        {
+            MySqlConnection conn;
+            string myConnectionString;
+
+            myConnectionString = "Server=127.0.0.1;Database=vidarr;Uid=root;Pwd='';SslMode=None;charset=utf8";
+
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                MySqlCommand cmd = new MySqlCommand();
+
+                cmd.CommandText = "truncate video";
+                conn.Open();
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException ex)
+            {
+                //MessageBox.Show(ex.Message);
+                var dialog = new MessageDialog(ex.Message);
+                //dialog.ShowAsync();
+
+            }
         }
 
         //zoek zonder input van user beginpunt
