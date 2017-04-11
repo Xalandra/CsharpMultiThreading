@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Vidarr.Classes;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.ViewManagement;
@@ -27,7 +28,7 @@ namespace Vidarr
         {
             this.InitializeComponent();
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
-            
+            Crawler crawler = new Crawler();
         }
 
         private void btnDownloader_Click(object sender, RoutedEventArgs e)
