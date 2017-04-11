@@ -161,6 +161,10 @@ namespace Vidarr.Classes
             try
             {
                 collection = Regex.Matches(response, pattern);
+                //string gevondenTitle = "";
+                //string gevondenDescription = "";
+                //string gevondenGenre = "";
+                //string gevondenThumbnail = "";
                 foreach (Match m in collection)
                 {
                     //spuug uit van je gevonden hebt
@@ -236,6 +240,13 @@ namespace Vidarr.Classes
                     cmd.Connection = conn;
                     //cmd.ExecuteNonQuery();
                     conn.Close();
+                    MySqlDataReader reader;
+
+                    cmd.CommandText = "INSERT INTO video(Url,Title,Description,Genre,Thumbnail) VALUES('https://www.youtube.com/watch?v=fPJ2RAmDQ3Y" + "','" + gevondenTitle + "','" + gevondenDescription + "','" + gevondenGenre + "','" + gevondenThumbnail + "')";
+                    conn.Open();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
                     //reader = cmd.ExecuteReader();
                 }
                 catch (MySqlException ex)
@@ -244,6 +255,10 @@ namespace Vidarr.Classes
 
                     var dialog = new MessageDialog(ex.Message);
                     //await dialog.ShowAsync();
+
+                    //var dialog = new MessageDialog(ex.Message);
+                    //dialog.ShowAsync();
+                    
                 }
             }
             catch (NullReferenceException e)
