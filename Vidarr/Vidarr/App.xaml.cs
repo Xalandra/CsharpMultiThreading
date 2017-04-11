@@ -32,11 +32,6 @@ namespace Vidarr
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-
-            using (var db = new BloggingContext())
-            {
-                db.Database.Migrate();
-            }
         }
 
         /// <summary>

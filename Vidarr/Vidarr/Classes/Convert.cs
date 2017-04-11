@@ -96,8 +96,7 @@ namespace Vidarr
                 }
             }
         }
-
-        //[MethodImpl(MethodImplOptions.PreserveSig)]
+        
         public async void ConvertChosenMedia(List<StorageFile> selectedFiles, string output)
         {
             List<StorageFile> files = selectedFiles;
@@ -110,21 +109,12 @@ namespace Vidarr
                 switch (output)
                 {
                     case "MP3":
-                        //savePicker.DefaultFileExtension = ".mp3";
-                        //savePicker.SuggestedFileName = "New Video";
-                        //savePicker.FileTypeChoices.Add("MPEG3", new string[] { ".mp3" });
                         profile = MediaEncodingProfile.CreateMp3(AudioEncodingQuality.High);
                         break;
                     case "MP4":
-                        //savePicker.DefaultFileExtension = ".mp4";
-                        //savePicker.SuggestedFileName = "New Video";
-                        //savePicker.FileTypeChoices.Add("MPEG4", new string[] { ".mp4" });
                         profile = MediaEncodingProfile.CreateMp4(VideoEncodingQuality.Auto);
                         break;
                     case "WAV":
-                        //savePicker.DefaultFileExtension = ".wav";
-                        //savePicker.SuggestedFileName = "New Video";
-                        //savePicker.FileTypeChoices.Add("WAV", new string[] { ".wav" });
                         profile = MediaEncodingProfile.CreateWav(AudioEncodingQuality.High);
                         break;
                     default:
@@ -137,8 +127,7 @@ namespace Vidarr
                 var folder = KnownFolders.VideosLibrary;
                 string datetime = "_"+DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second;
                 var destination = await folder.CreateFileAsync(source.Name.Remove(source.Name.Length - 4)+ datetime+"." +output);
-
-                //StorageFile destination = await savePicker.PickSaveFileAsync();
+                
                 MediaTranscoder transcoder = new MediaTranscoder();
 
                 PrepareTranscodeResult prepareOp = null;

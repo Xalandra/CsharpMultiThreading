@@ -22,20 +22,7 @@ namespace Vidarr.Classes
 
             //haal de results uit de response
             httpResponseBody = CrawlerRegex.regexResults(httpResponseBody);
-
-            /* BELANGRIJKE CODE OM OP TE SLAAN IN TXT BESTAND
-             * ************************************************** *
-            //bestandpicker in downloadsmap
-            FileSavePicker savePicker = new FileSavePicker();
-            savePicker.SuggestedStartLocation = PickerLocationId.Downloads;
-            savePicker.FileTypeChoices.Add("Simple Line Files", new List<string>() { ".txt" });
-            savePicker.SuggestedFileName = "httpResponseBody.txt";
-            StorageFile file = await savePicker.PickSaveFileAsync();
-            //schrijf httpResponseBody naar txt bestand
-            await FileIO.WriteTextAsync(file, httpResponseBody);*/
-
-
-
+            
             await Task.Factory.StartNew(async() =>
             {
                 //haal uit results urls
@@ -55,12 +42,9 @@ namespace Vidarr.Classes
                     //welke url crawlen
                     //Debug.WriteLine("url in getResponseBody() = " + url);
                     antwoord = await httpClientRequest.doeHttpRequestYoutubeVoorScrawlerEnGeefResults(url);
-                    //await Task.Delay(1000);
-                    //Debug.WriteLine(antwoord);
 
                     //haal content uit string
                     body = CrawlerRegex.regexContent(antwoord);
-                    //await Task.Delay(1000);
 
                     //haal keywords uit body
                     CrawlerRegex.regexKeywords(body);

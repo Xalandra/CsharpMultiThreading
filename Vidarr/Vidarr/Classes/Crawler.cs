@@ -122,14 +122,14 @@ namespace Vidarr.Classes
                 //voor testen max 50 rondes
                 //if (aantalGecrawled < 10)
                 //{
-                    //pak alleen uit lijstResponses als lijstUrls minder dan 16 heeft;
+                    //pak alleen uit lijstResponses als lijstUrls minder dan 11 heeft;
                     if (lijstUrls.Count < 11)
                     {
                         getUrls(pakUitQueue("responses")); //vult lijstUrls bij
                         aantalGecrawled++;
                     }
 
-                    //haal 15 bodies op
+                    //haal 10 bodies op
                     for (int i = 0; i < 10; i++)
                     {
                         //pak eerste url en haal body eruit

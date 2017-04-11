@@ -107,7 +107,6 @@ namespace Vidarr.Classes
                         {
                             //Debug.WriteLine("Gevonden url: " + url);
                             bool isUri = Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute);
-                            //Debug.WriteLine("bool: " + isUri);
                             //correcte uri + nog geen 10 urls toegevoegd + vorig toegevoegde url was niet dezelfde
                             if (isUri && (gevondenUrls < maxUrls) && !vorigGevondenUrl.Equals(url))
                             {
@@ -153,7 +152,6 @@ namespace Vidarr.Classes
             MatchCollection collectionDescription;
             MatchCollection collectionGenre;
             MatchCollection collectionThumbnail;
-            var videos = new Videos();
 
             try
             {
@@ -167,9 +165,6 @@ namespace Vidarr.Classes
                 {
                     //spuug uit van je gevonden hebt
                     keywords = m.Value;
-
-
-
                     //Debug.WriteLine("Gevonden keywords: " + keywords);
 
                     collectionUrl = Regex.Matches(m.Value, videoId);
@@ -220,14 +215,12 @@ namespace Vidarr.Classes
                 {
                     conn = new MySqlConnection(myConnectionString);
                     MySqlCommand cmd = new MySqlCommand();
-                    MySqlDataReader reader;
 
                     cmd.CommandText = "INSERT INTO video(Url,Title,Description,Genre,Thumbnail) VALUES('"+ gevondenUrl + "','" + gevondenTitle + "','" + gevondenDescription + "','" + gevondenGenre + "','" + gevondenThumbnail + "')";
                     conn.Open();
                     cmd.CommandType = CommandType.Text;
                     cmd.Connection = conn;
                     cmd.ExecuteNonQuery();
-                    //reader = cmd.ExecuteReader();
                 }
                 catch (MySqlException ex)
                 {
