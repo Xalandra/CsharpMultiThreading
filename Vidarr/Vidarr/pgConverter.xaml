@@ -8,18 +8,42 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="button" Content="Convert" HorizontalAlignment="Left" Margin="492,531,0,0" VerticalAlignment="Top" Width="564" Height="50" Click="button_Click"/>
+        <Button x:Name="button" Content="Convert" HorizontalAlignment="Left" Margin="108,517,0,0" VerticalAlignment="Top" Width="564" Height="50" Click="button_Click"/>
         <Button x:Name="button1" Content="Select a file..." HorizontalAlignment="Left" Margin="108,161,0,0" VerticalAlignment="Top" Width="185" Height="50" Click="button1_Click"/>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="327,161,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="605" Height="23"/>
         <Button x:Name="button2" Content="Select a file..." HorizontalAlignment="Left" Margin="108,229,0,0" VerticalAlignment="Top" Width="185" Height="50" Click="button2_Click"/>
         <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="327,229,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="605"/>
-        <Button x:Name="button3" Content="Select a file..." HorizontalAlignment="Left" Margin="108,302,0,0" VerticalAlignment="Top" Width="185" Height="50"/>
+        <Button x:Name="button3" Content="Select a file..." HorizontalAlignment="Left" Margin="108,302,0,0" VerticalAlignment="Top" Width="185" Height="50" Click="button3_Click_1"/>
         <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="327,302,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="605"/>
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="492,423,0,0" VerticalAlignment="Top" Width="564" Height="65">
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="108,417,0,0" VerticalAlignment="Top" Width="564" Height="65">
             <ComboBoxItem Content="MP3"/>
             <ComboBoxItem Content="MP4"/>
             <ComboBoxItem Content="WAV"/>
         </ComboBox>
-
+        <ListView x:Name="lijstGeconverteerd" HorizontalContentAlignment="Stretch" Height="635" ScrollViewer.VerticalScrollMode="Enabled" Margin="817,161,51,0" VerticalAlignment="Top" Width="1052" SelectionChanged="lijstGeconverteerd_SelectionChanged">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="500"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Row="0" Grid.Column="0"  Orientation="Horizontal" Margin="0,0,20,0">
+                            <TextBlock Grid.Column="0" Margin="5,0,0,0" x:Name="NameTxt" FontStyle="Italic" TextWrapping="Wrap" Text="{Binding titel}" Foreground="Black"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="0,0,20,0">
+                            <TextBlock Margin="5,0,0,0" Name="PhoneTxt" TextWrapping="Wrap" Foreground="DarkGray" Text="{Binding grootte}"  />
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <TextBlock Margin="5,0,0,0" Name="PhoneTxt2" TextWrapping="Wrap" Foreground="DarkGray" Text="{Binding extensie}"  />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>
