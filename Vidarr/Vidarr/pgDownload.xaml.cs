@@ -31,6 +31,8 @@ namespace Vidarr
     public sealed partial class pgDownload : Page
     {
         ObservableCollection<DownloadViewModel> downloadList = new ObservableCollection<DownloadViewModel>();
+        List<string> teDownloaden = new List<string>();
+        Object locker = new object();
         
         public pgDownload()
         {
@@ -126,6 +128,7 @@ namespace Vidarr
                         descriptionx = (string)reader["description"];
                         genrex = (string)reader["genre"];
                         thumbx = (string)reader["thumbnail"];
+                        urlx += ";"+titlex+";"+thumbx;
 
                         Debug.WriteLine(urlx + "\n" + titlex + "\n" + descriptionx + "\n" + genrex + "\n" + thumbx + "\n");
                         resultatenLijst.Add(new ResultZoekterm { url = urlx, titel = titlex, description = descriptionx, genre = genrex, thumb = thumbx });
@@ -193,13 +196,45 @@ namespace Vidarr
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            /*      IEnumerable<VideoInfo> videosInfors = DownloadUrlResolver.GetDownloadUrls(link);
+            //url uit aangevinkt resultaat
+            List<string> aangevinkt = new List<string>();
+            lock (this.locker)
+            {
+                aangevinkt = teDownloaden;
+            }
+            foreach (string url in aangevinkt)
+            {
+                string[] ontleden = url.Split(';');
+
+                IEnumerable<VideoInfo> videosInfors = DownloadUrlResolver.GetDownloadUrls(url);
 
                 VideoInfo video = videosInfors.First(infor => infor.VideoType == VideoType.Mp4);
 
-                downloadList.Add(new DownloadViewModel(video.DownloadUrl, video.Title, "https://i.ytimg.com/vi/" + id[1] + "/default.jpg", video.VideoExtension));
+                downloadList.Add(new DownloadViewModel(ontleden[0], ontleden[1], ontleden[2], video.VideoExtension));
                 lstDownload.ItemsSource = downloadList;
-                textBox.Text = id[1];*/
+                //textBox.Text = id[1];
+            }
+
+                  
+        }
+
+        private void slaAangevinkteUrlOp(object sender, RoutedEventArgs e)
+        {
+            CheckBox geselecteerdeBox = sender as CheckBox;
+            string url = "";
+            try
+            {
+                url = geselecteerdeBox.Content.ToString();
+            }
+            catch (NullReferenceException ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            Debug.WriteLine(url);
+            if (!url.Equals(""))
+            {
+                teDownloaden.Add(url);
+            }
         }
     }
 }
