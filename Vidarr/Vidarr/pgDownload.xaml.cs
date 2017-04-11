@@ -59,29 +59,6 @@ namespace Vidarr
             lstDownload.Width = gridRoot.ActualWidth;
         }
 
-        
-        private async void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-        {
-
-            /*string link = SearchBox.Text;
-            string[] id = link.Split('=');
-
-            try
-            {
-                IEnumerable<VideoInfo> videosInfors = DownloadUrlResolver.GetDownloadUrls(link);
-
-                VideoInfo video = videosInfors.First(infor => infor.VideoType == VideoType.Mp4);
-
-                downloadList.Add(new DownloadViewModel(video.DownloadUrl, video.Title, "https://i.ytimg.com/vi/" + id[1] + "/default.jpg", video.VideoExtension));
-                lstDownload.ItemsSource = downloadList;
-            }
-            catch (Exception ex)
-            {
-                var dialog = new MessageDialog(ex.Message);
-                await dialog.ShowAsync();
-            }*/
-        }
-
         private async void querySubmittedZoek(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             Debug.WriteLine("querysubmittedzoek; " + args.QueryText);
@@ -93,7 +70,7 @@ namespace Vidarr
             Task<bool> zoekInDb = Task<bool>.Factory.StartNew(() => 
             {
                 List<string> output = new List<string>();
-                
+                bool gelukt = false;
 
                 MySqlConnection conn;
                 string myConnectionString;
@@ -132,7 +109,7 @@ namespace Vidarr
 
                         Debug.WriteLine(urlx + "\n" + titlex + "\n" + descriptionx + "\n" + genrex + "\n" + thumbx + "\n");
                         resultatenLijst.Add(new ResultZoekterm { url = urlx, titel = titlex, description = descriptionx, genre = genrex, thumb = thumbx });
-                        
+                        gelukt = true;
                     }
 
                     reader.Close();
@@ -144,35 +121,7 @@ namespace Vidarr
                     Debug.WriteLine(ex.Message);
                 }
 
-
-
-                /*MySqlConnection conn;
-                string myConnectionString;
-                myConnectionString = "Server=127.0.0.1;Database=vidarr;Uid=root;Pwd='';SslMode=None;charset=utf8";
-                try
-                {
-                    EncodingProvider ppp;
-                    ppp = CodePagesEncodingProvider.Instance;
-                    Encoding.RegisterProvider(ppp);
-                    conn = new MySqlConnection(myConnectionString);
-                    string query = "SELECT Url FROM video WHERE video.title LIKE'%" + input + "%'";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    //MySqlDataReader reader;
-                    string title;
-                    conn.Open();
-                    cmd = new MySqlCommand(query, conn);
-                    title = cmd.ExecuteScalar().ToString();
-                    Debug.WriteLine("Gevonden: "+title);
-                }
-                catch (MySqlException ex)
-                {
-                    Debug.WriteLine(ex.Message);
-                }*/
-
-
-                
-
-                return true;
+                return gelukt;
             });
             zoekInDb.Wait();
             zoektermResults.ItemsSource = resultatenLijst;
@@ -186,12 +135,13 @@ namespace Vidarr
                 //staat niet in db
                 //ga zoeken op zoekterm
                 Debug.WriteLine("Moet gaan zoeken op zoekterm");
+
+                await ZoekZoekterm.crawlZoekterm(input);
+
+                Debug.WriteLine("Crawler is aan het zoeken, probeer het zo weer");
+                var dialog = new MessageDialog("Crawler is aan het zoeken, probeer het zo weer");
+                await dialog.ShowAsync();
             }
-        }
-
-        private void SearchBox_TextChangeds(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-        {
-
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
