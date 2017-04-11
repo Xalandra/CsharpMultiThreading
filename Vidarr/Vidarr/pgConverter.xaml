@@ -20,7 +20,7 @@
             <ComboBoxItem Content="MP4"/>
             <ComboBoxItem Content="WAV"/>
         </ComboBox>
-        <ListView x:Name="lijstGeconverteerd" HorizontalContentAlignment="Stretch" Height="635" ScrollViewer.VerticalScrollMode="Enabled" Margin="817,161,51,0" VerticalAlignment="Top" Width="1052" SelectionChanged="lijstGeconverteerd_SelectionChanged">
+        <ListView x:Name="lijstGeconverteerd" HorizontalContentAlignment="Stretch" Height="635" ScrollViewer.VerticalScrollMode="Enabled" Margin="817,161,51,0" VerticalAlignment="Top" Width="1052">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
