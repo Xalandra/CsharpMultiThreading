@@ -8,7 +8,18 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="108,84,0,0" VerticalAlignment="Top" Width="185" Height="50" Click="button_Click"/>
+        <Button x:Name="button" Content="Convert" HorizontalAlignment="Left" Margin="492,531,0,0" VerticalAlignment="Top" Width="564" Height="50" Click="button_Click"/>
+        <Button x:Name="button1" Content="Select a file..." HorizontalAlignment="Left" Margin="108,161,0,0" VerticalAlignment="Top" Width="185" Height="50" Click="button1_Click"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="327,161,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="605" Height="23"/>
+        <Button x:Name="button2" Content="Select a file..." HorizontalAlignment="Left" Margin="108,229,0,0" VerticalAlignment="Top" Width="185" Height="50" Click="button2_Click"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="327,229,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="605"/>
+        <Button x:Name="button3" Content="Select a file..." HorizontalAlignment="Left" Margin="108,302,0,0" VerticalAlignment="Top" Width="185" Height="50"/>
+        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="327,302,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="605"/>
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="492,423,0,0" VerticalAlignment="Top" Width="564" Height="65">
+            <ComboBoxItem Content="MP3"/>
+            <ComboBoxItem Content="MP4"/>
+            <ComboBoxItem Content="WAV"/>
+        </ComboBox>
 
     </Grid>
 </Page>

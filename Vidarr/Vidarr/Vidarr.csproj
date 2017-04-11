@@ -98,6 +98,7 @@
     <Compile Include="Classes\Convert.cs" />
     <Compile Include="Classes\Crawler.cs" />
     <Compile Include="Classes\CrawlerRegex.cs" />
+    <Compile Include="Classes\Download.cs" />
     <Compile Include="Classes\MaakHttpClientAan.cs" />
     <Compile Include="Classes\Model.cs" />
     <Compile Include="Classes\ZoekZoekterm.cs" />
