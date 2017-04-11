@@ -95,6 +95,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Convert.cs" />
     <Compile Include="Classes\Crawler.cs" />
     <Compile Include="Classes\CrawlerRegex.cs" />
     <Compile Include="Classes\MaakHttpClientAan.cs" />
