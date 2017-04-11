@@ -191,6 +191,11 @@ namespace Vidarr
             }
         }
 
+        private void backDownloader_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(pgDownload));
+        }
+
 
     }
 }

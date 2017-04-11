@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="button" Content="Convert" HorizontalAlignment="Left" Margin="108,517,0,0" VerticalAlignment="Top" Width="564" Height="50" Click="button_Click"/>
+        <Button x:Name="button" Content="Convert" HorizontalAlignment="Left" Margin="108,636,0,0" VerticalAlignment="Top" Width="318" Height="157" Click="button_Click"/>
         <Button x:Name="button1" Content="Select a file..." HorizontalAlignment="Left" Margin="108,161,0,0" VerticalAlignment="Top" Width="185" Height="50" Click="button1_Click"/>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="327,161,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="605" Height="23"/>
         <Button x:Name="button2" Content="Select a file..." HorizontalAlignment="Left" Margin="108,229,0,0" VerticalAlignment="Top" Width="185" Height="50" Click="button2_Click"/>
@@ -45,5 +45,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button Name="backDownloader" Content="Go To Downloader" HorizontalAlignment="Left" Margin="523,761,0,0" VerticalAlignment="Top" Height="32" Width="149" Click="backDownloader_Click"/>
+
     </Grid>
 </Page>

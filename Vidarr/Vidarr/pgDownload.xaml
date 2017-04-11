@@ -30,10 +30,10 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Row="0" Grid.Column="0"  Orientation="Horizontal" Margin="0,0,20,0">
-                            <CheckBox Margin="5,0,0,0" Content="{Binding url}"/>
+                            <CheckBox Name="checkboxResultaat" Margin="5,0,0,0" Content="{Binding url}" Checked="slaAangevinkteUrlOp"/>
                         </StackPanel>
                         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="0,0,20,0">
-                            <TextBlock Margin="5,0,0,0" Name="PhoneTxt" TextWrapping="Wrap" Foreground="DarkGray" Text="{Binding thumbnail}"  />
+                            <TextBlock Margin="5,0,0,0" Name="PhoneTxt" TextWrapping="Wrap" Foreground="DarkGray" Text="{Binding thumb}"  />
                         </StackPanel>
                         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
                             <TextBlock Margin="5,0,0,0" Name="PhoneTxt2" TextWrapping="Wrap" Foreground="DarkGray" Text="{Binding titel}"  />
@@ -43,20 +43,15 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <!--<Grid x:Name="GridRoot" HorizontalAlignment="Left" Height="1080" Margin="10,0,0,0" VerticalAlignment="Top" Width="1910">
-            <ListView x:Name="mediaElement" HorizontalAlignment="Left" Height="418" Margin="36,104,0,0" VerticalAlignment="Top" Width="746"/>-->
-        
-        <!--</Grid>-->
 
-        <Button Content="Download in .MP3" FontSize="32" HorizontalAlignment="Left" Margin="42,618,0,0" VerticalAlignment="Top" Height="157" Width="318" Click="Button_Click_1"/>
-        <Button Content="Download in .MP4" FontSize="32" HorizontalAlignment="Left" Margin="425,618,0,0" VerticalAlignment="Top" Height="157" Width="318"/>
-        <!--<ListView x:Name="lstDownload" HorizontalAlignment="Left" Height="960" Margin="879,39,0,0" VerticalAlignment="Top" Width="960">
-            <Grid Height="100" Width="100"/>
-        </ListView>-->
 
-        <Button Content="Go To Converter" HorizontalAlignment="Left" Margin="810,743,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button Content="Download in .MP4" FontSize="32" HorizontalAlignment="Left" Margin="42,618,0,0" VerticalAlignment="Top" Height="157" Width="318" Click="Button_Click_1"/>
+        <!--<Button Content="Download in .MP4" FontSize="32" HorizontalAlignment="Left" Margin="425,618,0,0" VerticalAlignment="Top" Height="157" Width="318"/>-->
 
-        <Grid x:Name="GridRoot" Margin="1026,76,94,305" RenderTransformOrigin="1.764,0.193">
+
+        <Button Content="Go To Converter" HorizontalAlignment="Left" Margin="594,743,0,0" VerticalAlignment="Top" Click="Button_Click" Height="32" Width="149"/>
+
+        <Grid x:Name="GridRoot" Margin="743,76,94,305" RenderTransformOrigin="1.764,0.193">
             <ListView x:Name="lstDownload" LayoutUpdated="lstDownload_LayoutUpdated">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -86,5 +81,6 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
+
     </Grid>
 </Page>
