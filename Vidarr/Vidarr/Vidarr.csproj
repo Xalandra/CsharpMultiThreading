@@ -109,6 +109,7 @@
     <Compile Include="Download.xaml.cs">
       <DependentUpon>Download.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DownloadModelView.cs" />
     <Compile Include="LandingPage.xaml.cs">
       <DependentUpon>LandingPage.xaml</DependentUpon>
     </Compile>
@@ -187,9 +188,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MySql.Data.RT, Version=6.7.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\MySQL\MySQL Connector Net 6.7.9\Assemblies\RT\MySql.Data.RT.dll</HintPath>
+    <Reference Include="MySql.Data.RT">
+      <HintPath>..\..\..\..\..\MySql.Data.RT.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

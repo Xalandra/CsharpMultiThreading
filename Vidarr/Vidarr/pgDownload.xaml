@@ -7,20 +7,25 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid x:Name="gridRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <AutoSuggestBox x:Name="SearchBox"
                             PlaceholderText="Search...."
                             Margin="42,39,1177,0"
                             QueryIcon="Find" 
-                            KeyUp="zoek" QuerySubmitted="querySubmittedZoek"
+                            KeyUp="zoek" LayoutUpdated="lstDownload_LayoutUpdated" QuerySubmitted="SearchBox_QuerySubmitted"
                             
                             />
 
         <Button Content="Download in .MP3" FontSize="32" HorizontalAlignment="Left" Margin="42,858,0,0" VerticalAlignment="Top" Height="157" Width="318"/>
         <Button Content="Download in .MP4" FontSize="32" HorizontalAlignment="Left" Margin="425,858,0,0" VerticalAlignment="Top" Height="157" Width="318"/>
-        <ListView HorizontalAlignment="Left" Height="960" Margin="879,39,0,0" VerticalAlignment="Top" Width="960"/>
+        <ListView x:Name="lstDownload" HorizontalAlignment="Left" Height="960" Margin="879,39,0,0" VerticalAlignment="Top" Width="960">
+            <Grid Height="100" Width="100"/>
+        </ListView>
 
         <Button Content="Go To Converter" HorizontalAlignment="Left" Margin="1779,1038,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Grid x:Name="GridRoot" HorizontalAlignment="Left" Height="1080" Margin="10,0,0,0" VerticalAlignment="Top" Width="1910">
+            <ListView x:Name="mediaElement" HorizontalAlignment="Left" Height="712" Margin="54,104,0,0" VerticalAlignment="Top" Width="728"/>
+        </Grid>
 
     </Grid>
 </Page>
